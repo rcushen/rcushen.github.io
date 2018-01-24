@@ -8,19 +8,16 @@
 
   <title>  Topic Modelling | Forest for the Tree
 </title>
-  <link rel="canonical" href="http://rcushen.github.io/topic-modelling.html">
+  <link rel="canonical" href="/topic-modelling.html">
 
 
-  <link rel="stylesheet" href="http://rcushen.github.io/theme/css/bootstrap.min.css">
-  <link rel="stylesheet" href="http://rcushen.github.io/theme/css/font-awesome.min.css">
-  <link rel="stylesheet" href="http://rcushen.github.io/theme/css/pygments/default.min.css">
-  <link rel="stylesheet" href="http://rcushen.github.io/theme/css/theme.css">
+  <link rel="stylesheet" href="/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/theme/css/pygments/default.min.css">
+  <link rel="stylesheet" href="/theme/css/theme.css">
 
-  <link rel="alternate" type="application/atom+xml" title="Full Atom Feed"
-        href="http://rcushen.github.io/feeds/all.atom.xml">
-  <link rel="alternate" type="application/atom+xml" title="Categories Atom Feed"
-        href="http://rcushen.github.io/feeds/posts.atom.xml">  
-  <meta name="description" content="Topic Modelling with LSA and LDA¶In this kernel, two topic modelling algorithms are explored—LSA and LDA—in order to study . These techniques are applied to the 'A Million News Headlines' dataset, which is a corpus of over one million news article headlines published by the ABC. As an exercise in NLP, the goal of these analyses was to better understand the way language is used in reporting the news, and how it may have changed across time.">
+  
+  <meta name="description" content="In this post, two typical NLP techniques are explored in relation to the problem of topic modelling. These are applied to the 'A Million News Headlines' dataset, which is a corpus of over one million news article headlines published by the ABC. Introduction¶Motivating the Problem¶Topic modelling is a classic problem in the domain of natural language processing. Given a corpus of text $\mathcal{C}$, composed of $n$ individual documents, the goal is to uncover any latent topic structure that may exist in the data. In other words, we are seeking to discover the topics with which a given series of documents are concerned. However, since we do not know a priori exactly what these topics are, this is an unsupervised">
 
 
 </head>
@@ -30,20 +27,20 @@
     <div class="container">
 <div class="row">
     <div class="col-sm-4">
-      <a href="http://rcushen.github.io/">
-        <img class="img-fluid rounded" src=http://rcushen.github.io/images/profile.png width=160 height=160 alt="Forest for the Tree">
+      <a href="/">
+        <img class="img-fluid rounded" src=/images/profile.png width=160 height=160 alt="Forest for the Tree">
       </a>
     </div>
   <div class="col-sm-8">
-    <h1 class="title"><a href="http://rcushen.github.io/">Forest for the Tree</a></h1>
+    <h1 class="title"><a href="/">Forest for the Tree</a></h1>
       <p class="text-muted">An economics and statistics blog.</p>
       <ul class="list-inline">
           <li class="list-inline-item"><a href="http://getpelican.com/" target="_blank">Pelican</a></li>
           <li class="list-inline-item"><a href="http://python.org/" target="_blank">Python.org</a></li>
           <li class="list-inline-item"><a href="http://jinja.pocoo.org/" target="_blank">Jinja2</a></li>
               <li class="list-inline-item text-muted">|</li>
-            <li class="list-inline-item"><a href="http://rcushen.github.io/pages/about.html">About</a></li>
-            <li class="list-inline-item"><a href="http://rcushen.github.io/pages/contact.html">Contact</a></li>
+            <li class="list-inline-item"><a href="/pages/about.html">About</a></li>
+            <li class="list-inline-item"><a href="/pages/contact.html">Contact</a></li>
             <li class=" list-inline-item text-muted">|</li>
           <li class="list-inline-item"><a class="fa fa-twitter" href="https://twitter.com/rcushen" target="_blank"></a></li>
       </ul>
@@ -65,14 +62,14 @@
         </li>
         <li class="list-inline-item">
           <i class="fa fa-folder-open-o"></i>
-          <a href="http://rcushen.github.io/category/posts.html">posts</a>
+          <a href="/category/posts.html">posts</a>
         </li>
           <li class="list-inline-item">
             <i class="fa fa-user-o"></i>
-              <a href="http://rcushen.github.io/author/ryan-cushen.html">Ryan Cushen</a>          </li>
+              <a href="/author/ryan-cushen.html">Ryan Cushen</a>          </li>
           <li class="list-inline-item">
             <i class="fa fa-files-o"></i>
-              <a href="http://rcushen.github.io/tag/python.html">#python</a>          </li>
+              <a href="/tag/python.html">#python</a>          </li>
       </ul>
     </header>
     <div class="content">
@@ -1052,15 +1049,12 @@ h6:hover .anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Topic-Modelling-with-LSA-and-LDA">Topic Modelling with LSA and LDA<a class="anchor-link" href="#Topic-Modelling-with-LSA-and-LDA">¶</a></h1><p>In this kernel, two topic modelling algorithms are explored—LSA and LDA—in order to study . These techniques are applied to the 'A Million News Headlines' dataset, which is a corpus of over one million news article headlines published by the ABC. As an exercise in NLP, the goal of these analyses was to better understand the way language is used in reporting the news, and how it may have changed across time.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Exploratory-Data-Analysis">Exploratory Data Analysis<a class="anchor-link" href="#Exploratory-Data-Analysis">¶</a></h2><p>As usual, it is prudent to begin with some basic exploratory analysis.</p>
+<p><em>In this post, two typical NLP techniques are explored in relation to the problem of topic modelling. These are applied to the 'A Million News Headlines' dataset, which is a corpus of over one million news article headlines published by the ABC.</em></p>
+<h1 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">¶</a></h1><h2 id="Motivating-the-Problem">Motivating the Problem<a class="anchor-link" href="#Motivating-the-Problem">¶</a></h2><p>Topic modelling is a classic problem in the domain of natural language processing. Given a corpus of text $\mathcal{C}$, composed of $n$ individual documents, the goal is to uncover any latent topic structure that may exist in the data. In other words, we are seeking to discover the topics with which a given series of documents are concerned. However, since we do not know a priori exactly what these topics are, this is an <em>unsupervised</em> problem; we have only input data, and must</p>
+<p>LSA and LDA represent two distinct approaches to this problem, with both relying upon very different mathematical techniques. As we shall however see, both can be used to generate very similar output, affording us a great degree of comparison between the two.</p>
+<h2 id="A-Brief-Review-of-LSA-and-LDA">A Brief Review of LSA and LDA<a class="anchor-link" href="#A-Brief-Review-of-LSA-and-LDA">¶</a></h2><p>Before embarking upon our analysis, let us briefly outline the two techniques that are to be employed.</p>
+<h2 id="The-Data">The Data<a class="anchor-link" href="#The-Data">¶</a></h2><p>The dataset to which we will be using for topic modelling is the 'A Million News Headlines' dataset, published by the ABC. This is a set of over one million news article headlines taken from the Australian public broadcaster's news division, collected between 2004 and 2017. Further information can be found on the Kaggle page.</p>
+<h1 id="Analysis">Analysis<a class="anchor-link" href="#Analysis">¶</a></h1><h2 id="Exploratory-Data-Analysis">Exploratory Data Analysis<a class="anchor-link" href="#Exploratory-Data-Analysis">¶</a></h2><p>As usual, it is prudent to begin with some basic exploratory analysis.</p>
 </div>
 </div>
 </div>
@@ -1069,21 +1063,21 @@ h6:hover .anchor-link {
 <div class="prompt input_prompt">In [1]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="k">import</span> <span class="n">display</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="k">import</span> <span class="n">tqdm</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Counter</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span>
+<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
 <span class="kn">import</span> <span class="nn">ast</span>
 
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">matplotlib.mlab</span> <span class="k">as</span> <span class="nn">mlab</span>
-<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sb</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.mlab</span> <span class="kn">as</span> <span class="nn">mlab</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="kn">as</span> <span class="nn">sb</span>
 
 <span class="o">%</span><span class="k">matplotlib</span> inline
 
-<span class="n">datafile</span> <span class="o">=</span> <span class="s1">'../input/abcnews-date-text.csv'</span>
-<span class="n">raw_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">datafile</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">infer_datetime_format</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">datafile</span> <span class="o">=</span> <span class="s1">'data/abcnews-date-text.csv'</span>
+<span class="n">raw_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">datafile</span><span class="p">,</span> <span class="n">parse_dates</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">infer_datetime_format</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
 <span class="n">reindexed_data</span> <span class="o">=</span> <span class="n">raw_data</span><span class="p">[</span><span class="s1">'headline_text'</span><span class="p">]</span>
 <span class="n">reindexed_data</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">raw_data</span><span class="p">[</span><span class="s1">'publish_date'</span><span class="p">]</span>
@@ -1164,12 +1158,13 @@ h6:hover .anchor-link {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [2]:</div>
+<div class="prompt input_prompt">In [6]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Define helper functions</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Define helper functions</span>
 <span class="k">def</span> <span class="nf">get_top_n_words</span><span class="p">(</span><span class="n">n_top_words</span><span class="p">,</span> <span class="n">count_vectorizer</span><span class="p">,</span> <span class="n">text_data</span><span class="p">):</span>
-    <span class="sd">'''returns a tuple of the top n words in a sample and their accompanying counts, given a CountVectorizer object and text sample'''</span>
+    <span class="sd">'''returns a tuple of the top n words in a sample and their accompanying counts, </span>
+<span class="sd">        given a CountVectorizer object and text sample'''</span>
     <span class="n">vectorized_headlines</span> <span class="o">=</span> <span class="n">count_vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">text_data</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">())</span>
     
     <span class="n">vectorized_total</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">vectorized_headlines</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -1180,7 +1175,8 @@ h6:hover .anchor-link {
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_top_words</span><span class="p">):</span>
         <span class="n">word_vectors</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">word_indices</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">1</span>
 
-    <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">'ascii'</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">'utf-8'</span><span class="p">)</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">count_vectorizer</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">word_vectors</span><span class="p">)]</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s1">'ascii'</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">'utf-8'</span><span class="p">)</span> 
+                 <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">count_vectorizer</span><span class="o">.</span><span class="n">inverse_transform</span><span class="p">(</span><span class="n">word_vectors</span><span class="p">)]</span>
 
     <span class="k">return</span> <span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">word_values</span><span class="p">[</span><span class="mi">0</span><span class="p">,:</span><span class="n">n_top_words</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
 </pre></div>
@@ -1190,19 +1186,20 @@ h6:hover .anchor-link {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [3]:</div>
+<div class="prompt input_prompt">In [7]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="k">import</span> <span class="n">CountVectorizer</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
 
 <span class="n">count_vectorizer</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">stop_words</span><span class="o">=</span><span class="s1">'english'</span><span class="p">)</span>
-<span class="n">words</span><span class="p">,</span> <span class="n">word_values</span> <span class="o">=</span> <span class="n">get_top_n_words</span><span class="p">(</span><span class="n">n_top_words</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">count_vectorizer</span><span class="o">=</span><span class="n">count_vectorizer</span><span class="p">,</span> <span class="n">text_data</span><span class="o">=</span><span class="n">reindexed_data</span><span class="p">)</span>
+<span class="n">words</span><span class="p">,</span> <span class="n">word_values</span> <span class="o">=</span> <span class="n">get_top_n_words</span><span class="p">(</span><span class="n">n_top_words</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">count_vectorizer</span><span class="o">=</span><span class="n">count_vectorizer</span><span class="p">,</span> 
+                                         <span class="n">text_data</span><span class="o">=</span><span class="n">reindexed_data</span><span class="p">)</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">words</span><span class="p">)),</span> <span class="n">word_values</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">words</span><span class="p">)))</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Top Words'</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">words</span><span class="p">)));</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">words</span><span class="p">);</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Top Words'</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -1210,232 +1207,197 @@ h6:hover .anchor-link {
 <div class="output_wrapper">
 <div class="output">
 <div class="output_area">
-<div class="prompt output_prompt">Out[3]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>Text(0.5,1,'Top Words')</pre>
-</div>
-</div>
-<div class="output_area">
 <div class="prompt"></div>
 <div class="output_png output_subarea ">
-<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA7UAAAHiCAYAAAA3TetTAAAABHNCSVQICAgIfAhkiAAAAAlwSFlz
-AAALEgAACxIB0t1+/AAAADl0RVh0U29mdHdhcmUAbWF0cGxvdGxpYiB2ZXJzaW9uIDIuMS4wLCBo
-dHRwOi8vbWF0cGxvdGxpYi5vcmcvpW3flQAAIABJREFUeJzt3Xu8bWVdL/7PVxC1FEHZmQGe7U85
-ecgSdYuUXUwTQeugJ6/HEs2iTlh5yoqOGV5PlCc92cUOKoFmIt5JMEREwRsXBUFQcwcYECoKYmpq
-wPP7YzwLJot123uvxdrP5v1+veZrjfmM23eOMeaY8zPHZVVrLQAAADCiO6x3AQAAALC1hFoAAACG
-JdQCAAAwLKEWAACAYQm1AAAADEuoBQAAYFhCLQDczlXVr1XV+9e7DgDYGkItAKxAVX1j5nFjVf37
-zPNnrOJ8nl1V581rO3ORtuet1nwBYFRCLQCsQGvtrnOPJP+S5Odm2t60irM6I8mPVNXdk6Sq7pzk
-B5PsMa/tYX3YLVJVO61irQCw7oRaAFgFVXWXqvqrqrqqqq6oqldU1R17v4OqanNVvbiqrqmqS6vq
-yQtNp7X2z0muSvLjvWn/JJ9I8tF5bd9Jcn6f/g/3I7dfq6oLqurgmbqOr6pXV9X7quqbSX60qr6v
-qk6uqq9X1ceS/KeZ4Xfqr+Pqqrquqj5VVT+4qgsLAFaRUAsAq+PFSX4kyQ8neWiSRyb5vZn+G5Ps
-kuT7k/xKkuOq6r6LTOvMJD/Zu3+yP//wvLaPtNZu7EdtT0ryriQbkvxukrfOm/YvJHlhkrslOSfJ
-0UmuSXKvJP8jyS/NDPuzSR6S5H5Jdk/y35Ncu7JFAAC3PaEWAFbHM5Ic2Vr7SmvtS0leluQXZ/pf
-n+TFrbXvttben+T9SZ60yLQ+lJsD7E9kCrVnzmv70Ex3S/LK1tp/tNZOSXJqkqfOTO9trbWzWms3
-Jqkk/zXJH7bW/r21dn6S2dOn/yPJrkkekCSttYtaa1/ekgUBALcloRYAtlFVVaYjsF+Yaf5Ckj1n
-nl/dWvv2vP4/sMgkz0jy0KraNdNR07OTXJDk/r3tx3Lz9bQ/kORfWmttiXlfPtP9/ZmC7eXzhp/z
-3iSvT/L/knyxqv66qu66SJ0AsO6EWgDYRj1QfjEz16YmuU+SK2ee79FPFZ7t/6+LTO/iJNdlOjX4
-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
-7k2/nFTVM6vqgqr6VFW9sbdtqKq3V9U5/fGIVaz5M1X12qq6qKreV1V3qar7VdU/VtUnqurMqnpA
-Ve1UVZf2N9ZuVXVDVf1kn84ZVbXPatS0QH2f7b9u/VNftj9TVR+pqs9X1f798bG+jD9aVT/Yx31W
-Vb2jv47PV9WfrnZ9fT7fW1UF8euCAAAPsElEQVQn9fX16ap6alX9UV9Pn66qo/syu19VfXJmvH3m
-nlfVUVV1cV/v/2eN6nxhVX2uqj5cVW+uquf3Xy8/3uf7zqrava/rs2fG29i33d9M8gNJTq+q07eh
-jlts3336H+htp1XVffpwt/hFs6q+0f8+sqZfdN82836r3u9hfRv4VFWdXVV3q1U6krJKdZ9ZVScm
-uTjJUUnuV1XnV9Urlpjvkq97ofVSVQf298Qnq+qtVXXX3n5ZVf1J3+5+d6H13LtnzyK51bT6cn5H
-739IVf17Ve1SVXeuqku2YJkutv/5zZn3w/F92Atr2u9UVX21qp7Z299QVY/Zgnm+q6b92kVVddjs
-Mu7dT6qqY3v3k2t6D3+qpn3cLklekuSpfb09taajPm+sqo8kmdsuzuzL65M1c2RnZh43bZO1yP5r
-C5fhrT535g3zmqo6t7/mF8+0X1ZVL+51XlhVD9iSeS9R0+/27TJV9aqq+kDvflSv81b1bMN2/OTV
-qHle/S+o6fPmpn3lvP4H9WX+yST/bbXnv8Iat3gZr2Et8/eNx1bV31TVWUn+dLFtvKp+qKb99Pl9
-/LnvEDvN3yesQo03rdMkc/O/1fec3v5zVXVWr/f9VXWvqtqY5NeS/M9e70/0Sf9kf02X1BYcgauF
-vze8a6b/Y6rqnb372b32s5M8YmaYY6vq1QvNv28f5/TlOvcee0lVPW9mmJdX1W9twWK81XrZkmU4
-7/X/WJL/muQVfXner/d6ct8m/mlmGQ+z365bf+88qeZ9n88C20xNn6un1c374kN6+8aavre9Icmn
-k+xdVc+Z2x76+pg78r1gTqiqe/b1dVFVvS5JbcE63z611jzW+JFkY5KW5BH9+TFJ/jDJ5Un+c297
-Q5Ln9e4PJtnUuy9LskeSH0ryT0n26O336H//PsmP9+77JPnMKtZ8fZL9+vMTkvxCktOS7NPbHp7k
-A737H3uNP5vp/w6/IMmdkly6hsv0+iQ/nOnHmU/05VpJDknyriS7Jtm5D/8zSd7eu5+V5JIkd09y
-5yRfSLL3GtT480leO/P87nPrrT9/Y5Kf692nzyzr/53kN5LcM8nnkptu6LbbGtT4sCTn9+VwtySf
-T/L8JBck+ak+zEuS/N/efX6S+/bu30/yh7Pb6TbUcavtO8k/JDm0P/+lJO/q3ccmedLMuN/ofx+Z
-5Loke/Vt4mNJfjzJLn19P6wPt2umO78/Msl7ZraJv1zHur85s1w3Jvn0Cua95Ouev14y7UfOSPK9
-M+vvj2aG+72ZaS+2nj+YZNNi0+rL9ZLe9n8y7QsekeSnkrx5K97f8/c//5rkTrPvhyR/k+TxSR7Y
-5/fa3v75ufpWOM+5fepdMn1JuOfcMu7tT0pybO++MMme8+q4xTaU5EWZ9kt36c+/J8mde/c+Sc6d
-v75zy21ywf3XFi7D+Z87z88tP1/mXvNOvf1HZraH3+jdv57kdVv73p5X0wFJ3tq7z0xydpI7Jjky
-ya8uU88Wb8er+Ujy0L7ev6evm819eR7bt407Z/pM3yfT59AJc+vytnxs7TJegzoW2jcem+Q9SXZa
-ahtP8hdJntG7d8n0ntyYBfYJa7ROF/ues3tu/jz+5SR/1rtflOT5M9M9NslbM+2P902yeQtqWuh7
-w2eTbOjP/z7JzyW5d5J/SbKhL6OPpO9/Fpt/kgMz3Sm3er/3JPnJvmw/2Ye5Q5J/TnLPFda74HrZ
-imX4rHn1z35WfnBmuMclef9MvyH227nl984HJ/mP3Lx/m3tvLLTOdk6ya+/eI9M2Wn3+NyY5oPf7
-gUz7v3tker+fObM8F8wJSV6dm/edj8/0ebHV3+O2h8eOdPrH9u7y1tpHevffJXlhpsD3T73tuCSH
-J/m/i4z/qEwfVF9JktbaNb39Z5LsW3XTDyy7VtVdW2vfWGAaW+rS1tr5vfsTmd5EP5bkrTPzmzu6
-fGamneN9k/xxkl9J8qFMXzLXyqWttbkjSBclOa211mo6qrQx087juJp+5W2Z3uhzTmutXdfHvTjJ
-f8r0hWQ1XZjkz6rqTzLt8M6sqp+vqt/LtKO8R5KLMoWg1yV5dlX9dpKnJtk/U1D5dpLX918B1+L6
-rEckeXdr7dtJvl1V/5DkezPt8D/Uhzku0842mT6wnprpaOJT+2M13Gr7rqofzc1HO96YZCVH1M9u
-rV2RJFV1fqbt4LokV7XWzunT/nrvv73Vfek21LHQ6/7wvGEOyPRh+ZH+2nfJFIDnvGWme7n1vOC0
-2vQ/x/+5qv5Lpm34lZn2Cztl2kdsiYX2PxckeVM/cjF39GJu3/OFJK9JclhV7Znk2tbaN7dgfr9Z
-VU/s3Xtn+gKzmI8kObaqTkjyjiWGO7G19u+9+45J/rKq9ktyQ5L/vEw9S+2/Vmr+5878U+Se0o9u
-7JzpS/K+mZZxcvPr+kRW76jjJ5I8tKp2TfKdJJ/M9CPJT/TalqpnzpZsx6vpJ5K8s7X2rSSp6cyK
-WQ/ItM1+vvf/uySHrVEtS1mNZbwaFto3prfd0IdZbBv/WJIXVNVeSd7RWvt8H3ehfcK2WGid3jmL
-f8/ZK8lbquremba7pfbZ72qt3Zjk4vlHI5ex0PeGNyb5har62yQ/muSZmQ4gfLC1dnWv/S255T5l
-ofkf2B/n9ed3zRQ8z6jpLJcHJ7lXkvNaa1/dgpq35LvilizDWbP7o40z7SPtt09rrV1XVT+e6fNq
-1+QW742F1lkl+d81nf14Y5I9M62jJPlCa+3jvXv/JB+aywZV9daZWhfMCZk+N/9br+Gkqrp2mde2
-3RNqbztt3vOvZfpFaVvdIdMvNd9ehWnN952Z7hsyvZG+1lrbb4Fhz0jyPzL9WvRHSX43069XW/pF
-dmvru3Hm+Y2Ztu2XJjm9tfbEmk4R+uAi496QNXgvtNb+qaoekumXxZdV1WmZfrjY1Fq7vKpelOkD
-NEnenumX9A8k+cTcB0pV7Z/k0Zl+bXxupi8K6+ktmT6o3pGkzX2Bu41dn37pRE3Xkewy02/N1+s2
-WKruLQlfC1nJ664kp7bWnr7INGZrWG49LzWtM5IcnOmX6Pdn+gV6p0z7hC0x/zXdJdOvyT+Z6UjF
-C6rqh/v8Ds/0C/QLkjwx0/tlxfueqnpkpg/+H22tfauqPpjpvTm73557r6a19mtV9fBezyeq6qGL
-THp2mf7PJF9K8qBM28Fy++yl9l8rNf9z56bnVXXfTEelHtZau7amU/TuPDPs3PJftfdRa+0/qurS
-TEctPpopTP10kvsn+fdl6rmp9Kx8O77dWaVlvJZm18+C23hr7e9rOkX58UlOrqpfzXSUa6F9wmq7
-Qxb/nvMXSV7ZWjux7zNetMR0Zmtd8S+oi3xveF2mH7+/nelHgetX8KPsQvOvJH/cWvt/Cwz/ukzb
-zPdnOqtjS2zJd8UtWYYLzeOm/dGA++3Z5dRy6/3qQuvsGZmOxj+0v7cvm3lNK93XLZgTVumH/e2K
-a2pvO/fpR3CS5L8nOTfJxqq6f2/7xUxHNhfzgUzXFNwzSarqHr39fZlOVU1vX2gnslq+nuTSqnpy
-n1dV1YN6v7Mz/TJ3Y3/jnJ/pVKcz1rCe5dw9yZW9+1m39cyr6geSfKu19ndJXpHkIb3XV/qvZDdd
-59KX2SmZjjT9bR//rknu3lo7OdOO9UFZfR9J8nM1XfN410y//n4zybV183UrN22brbV/zvSh8sLc
-8ojIv2U6fXlrLbR9fzTJ03r/Z+TmkHJZptPGkunam+WOYH0uyb2r6mF92ner1btJyVrUva3LcrFp
-fTzJI+b2OTVdu7Xgr85LrOc5S03rzEw39vlYP4pwz0zXqm3rHTLvkOkygdMznXJ69yR3ba1dnum0
-rH1aa5dkOkL9/GzZvufumY7sfquma78O6O1fqqr/0n+EmDsakKq6X2vtrNbaHyW5OtMRguXW290z
-nTFwY6b31HI3MlqN/df8z53Zo/e7ZnqvX9ePChy8lfPYUmfm5vVzZqbrEc9bpp6t2o5X2RlJnlDT
-9YJ3y/TDyqzPZvpMn7sGcLHQfVvYmmW82hb7zjJrwW28qv6/TJcxvDrJu5P8yBrVuNA6/VYW/54z
-W++hM9NZtX32Qt8bWmv/munSiz9M/36Q5KwkP1XTdZF3zMquIT8lyS/Vzdeg71lV39f7vTPJQZku
-STplG1/GUt8VF1uGs1a6PEfdb38g01kSu/a6FnpvzE7vyz3Q/nSmswoXck6m7WH3/v3m52f6LZYT
-zsj0uZCqOjjTqeFDE2pvO59LcnhVfSbThvOqJM/OdDTkwkxHF/9msZFbaxcleXmSD1XVpzKd1pdM
-pxNtqumC84szfXitpWckeU6v4aJM16+mtfadTKfvzp0KcWamHcWFa1zPUv40yR9X1XlZnyN2P5zk
-7JpOBz0yycuSvDbTl/tTcutTs9+UaTt4X39+tyTvqaoLMn0Z/e3VLrCfkntipl/z35tpfV2X6cPm
-FX3e+2W6rnbOWzJdM3PCTNvRSf6xtvJGUYts37+R6ZTsCzJ9mMzduOK1mXben8p0KtaSv1a21r6b
-6fTZv+jjnJpVOjqxFnX3o/QfqemGFoveKGqFblovPWA+K8mbe20fy3TK5GIWWs9zNS41rbMy/VI/
-FyovSHJha23+UcMttVOSv+v7y/OSvLrdfGf4szJdv5dM+549c+vTr5fyj0l27vvno3LzfuyITKf9
-fzTJVTPDv6Kmm3Z8uvf7VKbr4vetfsORBebx10kO7ev/AVn+V/bV2H/N/9x5zVyP1tqnMi3Hz2a6
-5uojC05h9Z2Z6Qvdx1prX8p05OPMZerZlu14VbTWPpnpPfGpTPvKc+b1/3am041PqulGUV9e65qW
-sDXLeFUt8Z1l1mLb+FOSfLp/dj4w0z1H1qLGxdbpgt9zMh1VfGtVfSLJV2Ym9Q9Jnli3vFHU1lro
-e0MyfT+4vLX2mV77Vb2ej2Vaj59ZbsKttfdlWu8f6/vRt6UHuv45eXqSE2ZOD98WW7oMZx2f6YaF
-5838SLSQIffb/b2xOcmfL/HemPOmTN/xL8x02vlnF5nmlZnux3J2pu3hskzf5ZLFc8KLM92c6qJM
-pyH/yzKvbbtX2/49g+XUdArCe1prD1znUtiO1XQnzbu31l54G8/3rq21b9R0Z9QzkhzWP+yBQfnc
-WVs1XT7yjdbamtyVHmbVdCfb81prr1+j6d8h0/XXT16ny4rYRjPf5XbOdOT9mNbaO9e7rtvS9nS9
-Gdxu1XSL/vtlfa6ZPbqmf3R+5yTHCbQAsH3oRzW/meR31mj6+2Y6svlOgXZoL6qqn8n0Xe59uflm
-ircbjtQCAAAwLNfUAgAAMCyhFgAAgGEJtQAAAAxLqAUAAGBYQi0AAADDEmoBAAAY1v8Pmn1epc6E
-FWMAAAAASUVORK5CYII=
+<img src="data:image/png;base64,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
+b/51b4nrvKXWvSWu85Za95a4zltq3VviOm/Jdc+U+TIU5CJgSZK9k2wDvAQ4dY7bJEmSJI1sXvRY
+V9U9SV4HnA4sAFZU1Zo5bpYkSZI0snkRWANU1WnAaXPdjhkwl0NXrHvLqNe6t5x6rXvLqde6t5x6
+rXszMi9uXpQkSZI2dfNljLUkSZK0STOwniFJzk6ytE2flmSnuW6T5laSNyT5lbluB0CSpUmObdOv
+TPK+GazrgiT/c4o8vW6bJB/eXH69Ncm+SZ63AcstTnJlm77/855mGfefx+baXBw/SY5P8qIh6Qck
++eJstmU+Gdy3prncUUneuAHLHZDktwbeD/1cNkSf578N3S6TtSnJIYPnsg05Jmf6HNLn57Ghklyf
+ZNe5bMMYA+tZUFXPq6o75rodmnNvAOZFYF1Vq6rq9TNdT5IFwIuBSQNrNmDbtLKHqqo/qaqrplPe
+PLYvMPSimGSk+2Rm6/OeYb3uI1pv1P1oDh0A/NZUmTZThwAb20kwb88h6WxWsehmtTIzqf3n9q0k
+JyS5PMmnk/xKkmcnuTTJFUlWJHnQkGXv/08qySva8pcl+WhLW5TkM0kuaq+nj9ieq5N8KMmaJF9J
+sl2SRyb5tyQXJ1mZ5DFJFiS5tu3AOyW5L8kzWzkrkzxqA7bDh5NcmeTjSZ6T5Nwk1yTZr72+2bbL
+N5M8ui37yiSfbe27JsnfTaPeX03ypbbdrkzy4iR/07bXlUmOa+v3yCSXDCy3JMnFbfroJFe17f8P
+o9bdln1bW+8zknwyyRtbL8D5rbzPJdk5yWOTXDhue12e5PXAI4Czkpw1pPxf2i+S/FqSM1vamUn2
+avl+qWcgyY/b3wPS9WR8urXz40nS5j2lfQ6XJbkwyYMzSY9bT205K8kngCuAa4BHJlmb5Hvj2zhs
+2yQ5MMl5SS5JckqS7Vv69e1z/wbwpmHbuk0PfmP0gLLaPvrZNv/gJD9Nsk2SbVsbhx1brx/Yf05q
+y16R7phKkv9M8oqW/tEkz2nTn093PK5J9yNX92+rNv2iJMe36UPT7c+XJTkn3eNH3wG8OMnqdPv9
+Uen2968AJ7b1XtnW75IM9OwN1HH/550hx2cmOL+NK+ODSVa19Xj7QPr1Sd7e6r4iyWOG7VcD+d/U
+PnOSHJPka2362Uk+NqyejdhHDp2sLePa9dYk307y1bRjfNz8ZW0bfQP4b6OWO0K9094eG1jP+OP6
++CTvbdvzPcP2i7bc49KdN1a35Ze0IheMP0YmqPf+7Ur3w25kyHWqpb8g3Tdcl7bP4WFJFgN/CvxF
+a8MzWtHPbO28th1Dw64Rnxtox+9l/TH/qiTfSfJ14OkDeY5PcuxguQPz/ird9ebygf3ynUn+fGB1
+3wjsOn67TGd9x2273wL+K3BCkp8k+Q6wG3BoknvbOjwjs38OOSrJXenOm7cAO7TP45qWfmmbPibd
+NWPs3HBwW34sfvkAcAmwZ5JXt/U5u22/sR77ofFRkoe07Xtpkn8GMmz/mxNV5WuEF7AYKODp7f0K
+4K/pfor9v7S0E4E3tOmzgaVt+nq6Xxd6HN2vRe7a0ndpfz8B/Hab3gu4esT23APs296fDPwRcCaw
+pKU9Ffham/63Vv/v0z03/K3Ag4DrNmA73AP8Bt0/Zhe3bRHgYODzdAfZwpb/OcBn2vQrgWuBHYFt
+ge8Ce45Y7x8AHxp4v+PY9mvvPwq8oE2fNbBd/g/wZ8AubduP3bC70zTWeSmwGtgOeDBdoPhG4HLg
+d1qedwD/t02vBn69Tb8Z+OvB/WBI+Q/YL4B/BQ5r7/8Y+HybPh540cCyP25/DwDupPtxpa2A84Df
+BrZp2/wpLd8OdE8DOgD44sDn8r6e23IXsHd7fxdw5URtHL9t6I6Vc4BfHdiGfzOQ700DdU60rc9u
+n9vQsto2uK6l/QPdMfF04HfonqE/7Ni6EXjQ4P4D/D/g+cDjWxkfaunXANuPO863a9vhIWPbqqW/
+CDi+TV8B7D6ujvs/n/b+KLrjbrv2/leAbdv0EmDVwLF65cBnMvZ5P+D4ZPj57Y388nlsbD0WtPTf
+HPhM/qxN/0/gw1McT/sDp7TplcCFwNbAkcBrpqhn2vvIiMf4k9u2/5W2fda29T++fT7b0p3rl9Cd
+604e254b+9rQ7THNOoYd18cDXwQWTLRftOl/Al7Wpreh248XM+QYmcZ2neg6tTPrz9F/AvzjwD7/
+xoFyjwdOoTuP7NPKHXaN+BawqL3/BPACusD0e8Citj7nsv7894ByW/qBdE+vSJv3ReCZbTtc0vJs
+RXdNm851eaL1feW4Nr1y4BxyF/B+4Md0vdBfZRbPIXT70jXAw1r6C+mOuVOAV9EdJ9ey/hr/2IFj
+dm3bhouB+4D927xHtDJ2odv3Vw6s/9D4CDiW9cf88+nOXw+4vs7Fa75//TPf3FBV57bpjwFvo7s4
+f6elnQAcDvzfCZZ/FvDpqvoBQFXd1tKfA+yT3P8P1w5JHlxVP5qiPddV1eo2fTHdzvpbwCkDZY31
+oK+kOxGPToTmAAAJf0lEQVTsDfwt8D+Ar9MFA9N1XVVdAZBkDXBmVVWSK1obdqT7D3sJ3c6+9cCy
+Z1bVnW3Zq4BfozsQp3IF8A9J3kN3QVuZ5A+SvInupLALsIYuCPww8Kok/4tuGMJ+wA+BnwEfTvIl
+uhPEqH4b+EJV/bS1+1+BX6U7aX295TmB7sQC3cn0D4GjW/0vnqL8B+wXSZ7G+l6xjwKj9O5fWFXr
+WhtX030WdwI3VdVFrewftvmz0ZbrRmzjN8bl2Z/uonZua+c2dEH4mE8NTE+1rYeWVd2z89cmeSzd
+/vFeuuNjAV1g89ghx9blwMeTfJ7uH0hYf1x9F/ggsDzJ7sBtVTXWK/36JC9s03vSXbgmci5wfJKT
+gc9Oku/Usf2R7vh6X5J9gXuB/zLJcjDx8Tn+/Db+a98/TNfjvpAuONmHbpsw0NaLmbo392LgyUke
+DNxN12O1FHhGq3OyesZMZx8ZxTOAz1XVTwCSjP+BssfQnfeuafM/BiyfZh0T6WN7TGXYcQ1dQH9v
+yzPRfnEe8NYkewCfrapr2rLDrj/jDduu2zLxdWoP4FNJdqP7TIedQ8Z8vqruA65qPb3DrhEfBf4o
+yb8ATwNeQde5dHZV3dra9Cl++ZgZXy50gfWBwKXt/fZ0gfI56b6peiLwMLpr0M+ncV0edX2fl+Qv
+Bpa9bFz5g2b6HPIs4MvA/xvYV3amOyduTdeJ95Kq+lmSq4F3tXz3AbvTbSeA71bV+W16P+DrYzFR
+klMG2jA0PqI77/43gKr6UpLbJ2nzrDKwnp7ayOUzQRlbAU8b2MlHdffA9L10O+wdVbXvkLwr6b5O
+ewRdj91f0f0Hes406xxf730D7++j26feCZxVVS9M9zXe2ZO0edTxXd9J8mS6/9D/tn2FdThdb9oN
+SY6iO2FD1wN3JPA14OKq+k/ovgIHnk33y56voztBjGK6XzF9iu4k+tmu6d3FeIryp9q3xubfQxvC
+le5Ms81AnmHbdpSyZ6Itd02w7Ciff4AzquqlE5QxWPZU23qyslYCBwG/oOv1OZ4usH4v3T4y2M7t
+6HpFnkn31ezbkjyO7vg5nK4n5a10vTcvamWT5AC6C8PTquonSc6m208Ht/HYfktV/WmSp7a6VrcL
+3VTb4C+Am4En0H0eP5tgmTETHZ/jP/f73yfZm66n8SlVdXu6r523Hcg79rlOeUxX1S+SXE/Xu/VN
+uiDxd4FHAj+dop77m8To+8ioRt3ve9XT9pjKRMf14HYaul9U1SeSXEC3T56e5E/oeiTHH8tDh4IM
+qXcrJr5O/RPw3qo6tR07R028Sr9Ufya4RnyYrrPlZ3T/RNzTArTJPstfKnfg799W1T8Pyf9huh7h
+h9P9oz84hGiq6/Io6/twug6oJ7dzyB2s/zzHjrfZPIeE7pu9jwzsK1fSbbet29+x7fZw4LbW9rH9
+fKytd40rcyJD46MRPsc54xjr6dmr9d4BvJTuYrw468cov5yuF3giZ9L1PjwEIMkuLf0rdIEeLX2i
+A2EqPwSuS3JoKydJntDmXUD3X/N9VfUzuq/QX0MLAHq2I/D9Nv3KPgpM8gjgJ1X1Mbqv7p/UZv0g
+3djK+8fCtfU7na4H8V/a8tsDO1b3Q0RvoLuZY1TfAF6Qbvzt9nQnrLuA27N+vN/9n31V/TvdCe9t
+/HLP2Y/ohpKMN2y/+Cbrg7uXsb5X93q6r1ehG3oz+G3AMN8CHpHkKa3sB2fym1Vmoi3F8PUeNLht
+zgeePnZcpbuXYWgPyiTbesxkZZ1Dty+c13qvHkLXM/mdIeVsRTds6SzgTcBOdEM9bqD7inNJVV1L
+t23eyPrjakfg9nZBfAxdTyvAzenG429FF4zT2vfIqrqgqv4G+AFdD/dE+82YHem+lbiPbj+c6oa9
+iY7P8ee3wW8SdqDb5+9svXgHTVHHVM6h207nsP6f/tVT1LNB+8g02vPCdONhH0w3ZGDQt4C9kzyy
+vZ8ooN+Y+qe7PaZjomvPoKH7RZJfB66tqmPphkn95jTqHbZdf8LE16nBNhw2UM5Ux8DQa0RV3Ug3
+hOuv6f5xhu5aeEC6MbpbM9o4/NOBP876cfy7J3lom/c5YBnwFIZ3VE12XZ5ofQfdA9w9cA7ZoaXf
+zPpvv2bzHHIm8Ot034YCvHaSvAvp/qn4RZLfpfsHYZgLgd9Jd5/SQrphPWMmio/OobsekeQgul7z
+ecHAenquBg5Ld4PULsAxdL0Mp6QbBnEf3ZjLoar7mfZ3A19Pchldzxh0X/ctTXdTxFV0J9UN9TLg
+1a38NXQBD1V1N92Qi7GvXlbSHWhXbERdE/k7uh6Dc5n6Ij+q3wAuTDd84K3Au4AP0bX/8zxwSMvH
+6QK6r7T3Dwa+2D67r9P9hz6SNoziVLqv3z4LrKI7qRwG/H0rc1+6cdZjPkU3tu7kgbTjgC9n3M2L
+E+wXr6cbznI53Ylu7AaZD9GdgC6kG6s3ac9cVf2cbnjEP7Wyz2CSHq8ZbMu5dP/kPHaC+fdvmxbk
+vhL4ZKvzfLqAdyLDtvXY+kxW1gV0vUljF8PLmfgr9gXAx9pxfilwTK1/0s8FrA/GV9J93TkWlP4b
+sLDV/U7WH39H0A1H+hpw00A9f5/uJp8rW7suo7tnYJ+0G4+GtO0DdOel8+m+Pp2qt3ai43P8+e2D
+YzOq6rK23mvoxl+fy8ZZSTes4byqupmuh2zlFPVszD4yqaq6hG4/Wk33jdfKcfN/Rjf040vpbl78
+7obWNYEN2R4jm+TaM2ii/eLFwJXt3PsYunuJRq13ou069DpF12N7SpKVdEHhmH+lC9AHb14cb9g1
+ArprwQ3VnhJUVTe1es6j6xy75IFFPWA9vkI31ve8dg74NC1QbefYs+jOP/dNUMR013fQPwCPSvJT
+us/thy39iNamhzOL55C2Lx0DHJfkLrp/KibyfeDRSVa1bfCtCcr8Pt39UBfQfSZXsT5wnyg+ejvd
+DZOX0A3T+d4k7ZhV/vLiiNJ93fHFqnr8HDdFI0h3R/+OVfW2nsrbvqp+nO5JCecAy9tFQ9rkeX77
+ZemGlv24qqb19CDNP+meLnFpVX1khsrfii44P3SEYX+awMA1diHdtwArqupzUy03HznGWpuddI9Y
+eiSjj6EexXHpHtK/LXCCQbUkzW/pHrV6F/CXM1T+PnTfPH3OoHqjHZXuEaXb0n3T/Pkp8s9b9lhL
+kiRJPXCMtSRJktQDA2tJkiSpBwbWkiRJUg8MrCVJkqQeGFhLkiRJPTCwliRJknrw/wGU7MygRilA
+3gAAAABJRU5ErkJggg==
 " />
 </div>
 </div>
@@ -1455,9 +1417,9 @@ FWMAAAAASUVORK5CYII=
 <div class="prompt input_prompt">In [4]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">textblob</span> <span class="k">import</span> <span class="n">TextBlob</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">textblob</span> <span class="kn">import</span> <span class="n">TextBlob</span>
 
-<span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">tagged_headlines</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">'abcnews-pos-tagged.csv'</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
         <span class="n">word_counts</span> <span class="o">=</span> <span class="p">[]</span> 
@@ -1480,8 +1442,8 @@ FWMAAAAASUVORK5CYII=
         <span class="k">continue</span>
     <span class="k">break</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s1">'Total number of words: '</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">word_counts</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'Mean number of words per headline: '</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">word_counts</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">'Total number of words: '</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">word_counts</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">'Mean number of words per headline: '</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">word_counts</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1512,7 +1474,7 @@ Mean number of words per headline:  6.40006091755
 <div class="prompt input_prompt">In [5]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">word_counts</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">14</span><span class="p">),</span> <span class="n">normed</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">'Headline Word Lengths'</span><span class="p">)</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">14</span><span class="p">))</span>
@@ -1957,8 +1919,8 @@ IiIiIiJSpFRsEBEREREREZEi9f9NMfSoL3fPZwAAAABJRU5ErkJggg==
 <div class="prompt input_prompt">In [6]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pos_sorted_types</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">pos_counts</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">pos_counts</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">pos_sorted_counts</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">pos_counts</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">pos_sorted_types</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">pos_counts</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">pos_counts</span><span class="o">.</span><span class="fm">__getitem__</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">pos_sorted_counts</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">pos_counts</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pos_counts</span><span class="p">)),</span> <span class="n">pos_sorted_counts</span><span class="p">)</span>
@@ -2259,7 +2221,7 @@ kiRJmgsGMSRJkiRJ0lwwiCFJkiRJkubC/wD/y9I0sVcOjAAAAABJRU5ErkJggg==
 <div class="prompt input_prompt">In [7]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">monthly_counts</span> <span class="o">=</span> <span class="n">reindexed_data</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">'M'</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">monthly_counts</span> <span class="o">=</span> <span class="n">reindexed_data</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">'M'</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
 <span class="n">yearly_counts</span> <span class="o">=</span> <span class="n">reindexed_data</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">'A'</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
 <span class="n">daily_counts</span> <span class="o">=</span> <span class="n">reindexed_data</span><span class="o">.</span><span class="n">resample</span><span class="p">(</span><span class="s1">'D'</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
 
@@ -4068,14 +4030,14 @@ YII=
 <div class="prompt input_prompt">In [8]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">small_count_vectorizer</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">stop_words</span><span class="o">=</span><span class="s1">'english'</span><span class="p">,</span> <span class="n">max_features</span><span class="o">=</span><span class="mi">40000</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">small_count_vectorizer</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">stop_words</span><span class="o">=</span><span class="s1">'english'</span><span class="p">,</span> <span class="n">max_features</span><span class="o">=</span><span class="mi">40000</span><span class="p">)</span>
 <span class="n">small_text_sample</span> <span class="o">=</span> <span class="n">reindexed_data</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s1">'Headline before vectorization: '</span><span class="p">,</span> <span class="n">small_text_sample</span><span class="p">[</span><span class="mi">123</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">'Headline before vectorization: '</span><span class="p">,</span> <span class="n">small_text_sample</span><span class="p">[</span><span class="mi">123</span><span class="p">])</span>
 
 <span class="n">small_document_term_matrix</span> <span class="o">=</span> <span class="n">small_count_vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">small_text_sample</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="s1">'Headline after vectorization: </span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">small_document_term_matrix</span><span class="p">[</span><span class="mi">123</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="s1">'Headline after vectorization: </span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="n">small_document_term_matrix</span><span class="p">[</span><span class="mi">123</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -4113,7 +4075,7 @@ Headline after vectorization:
 <div class="prompt input_prompt">In [9]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">n_topics</span> <span class="o">=</span> <span class="mi">8</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">n_topics</span> <span class="o">=</span> <span class="mi">8</span>
 </pre></div>
 </div>
 </div>
@@ -4132,7 +4094,7 @@ Headline after vectorization:
 <div class="prompt input_prompt">In [10]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="k">import</span> <span class="n">TruncatedSVD</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">TruncatedSVD</span>
 
 <span class="n">lsa_model</span> <span class="o">=</span> <span class="n">TruncatedSVD</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_topics</span><span class="p">)</span>
 <span class="n">lsa_topic_matrix</span> <span class="o">=</span> <span class="n">lsa_model</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">small_document_term_matrix</span><span class="p">)</span>
@@ -4154,7 +4116,7 @@ Headline after vectorization:
 <div class="prompt input_prompt">In [11]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Define helper functions</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Define helper functions</span>
 <span class="k">def</span> <span class="nf">get_keys</span><span class="p">(</span><span class="n">topic_matrix</span><span class="p">):</span>
     <span class="sd">'''returns an integer list of predicted topic categories for a given topic matrix'''</span>
     <span class="n">keys</span> <span class="o">=</span> <span class="p">[]</span>
@@ -4178,7 +4140,7 @@ Headline after vectorization:
 <div class="prompt input_prompt">In [12]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">lsa_keys</span> <span class="o">=</span> <span class="n">get_keys</span><span class="p">(</span><span class="n">lsa_topic_matrix</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">lsa_keys</span> <span class="o">=</span> <span class="n">get_keys</span><span class="p">(</span><span class="n">lsa_topic_matrix</span><span class="p">)</span>
 <span class="n">lsa_categories</span><span class="p">,</span> <span class="n">lsa_counts</span> <span class="o">=</span> <span class="n">keys_to_counts</span><span class="p">(</span><span class="n">lsa_keys</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -4198,7 +4160,7 @@ Headline after vectorization:
 <div class="prompt input_prompt">In [13]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Define helper functions</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Define helper functions</span>
 <span class="k">def</span> <span class="nf">get_top_n_words</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">document_term_matrix</span><span class="p">,</span> <span class="n">count_vectorizer</span><span class="p">):</span>
     <span class="sd">'''returns a list of n_topic strings, where each string contains the n most common </span>
 <span class="sd">        words in a predicted category, in order'''</span>
@@ -4231,10 +4193,10 @@ Headline after vectorization:
 <div class="prompt input_prompt">In [14]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">top_n_words_lsa</span> <span class="o">=</span> <span class="n">get_top_n_words</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">lsa_keys</span><span class="p">,</span> <span class="n">small_document_term_matrix</span><span class="p">,</span> <span class="n">small_count_vectorizer</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">top_n_words_lsa</span> <span class="o">=</span> <span class="n">get_top_n_words</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">lsa_keys</span><span class="p">,</span> <span class="n">small_document_term_matrix</span><span class="p">,</span> <span class="n">small_count_vectorizer</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">top_n_words_lsa</span><span class="p">)):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Topic </span><span class="si">{}</span><span class="s2">: "</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">top_n_words_lsa</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">"Topic {}: "</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">top_n_words_lsa</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -4271,8 +4233,8 @@ Topic 7:  crash australian woman killed car dies dead sydney road qld
 <div class="prompt input_prompt">In [15]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">top_3_words</span> <span class="o">=</span> <span class="n">get_top_n_words</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">lsa_keys</span><span class="p">,</span> <span class="n">small_document_term_matrix</span><span class="p">,</span> <span class="n">small_count_vectorizer</span><span class="p">)</span>
-<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Topic </span><span class="si">{}</span><span class="s1">: </span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">top_3_words</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">lsa_categories</span><span class="p">]</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">top_3_words</span> <span class="o">=</span> <span class="n">get_top_n_words</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">lsa_keys</span><span class="p">,</span> <span class="n">small_document_term_matrix</span><span class="p">,</span> <span class="n">small_count_vectorizer</span><span class="p">)</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Topic {}: </span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">top_3_words</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">lsa_categories</span><span class="p">]</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">lsa_categories</span><span class="p">,</span> <span class="n">lsa_counts</span><span class="p">)</span>
@@ -4581,7 +4543,7 @@ AAAASUVORK5CYII=
 <div class="prompt input_prompt">In [16]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="k">import</span> <span class="n">TSNE</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="kn">import</span> <span class="n">TSNE</span>
 
 <span class="n">tsne_lsa_model</span> <span class="o">=</span> <span class="n">TSNE</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">perplexity</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> 
                         <span class="n">n_iter</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
@@ -4630,7 +4592,7 @@ AAAASUVORK5CYII=
 <div class="prompt input_prompt">In [17]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Define helper functions</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="c1"># Define helper functions</span>
 <span class="k">def</span> <span class="nf">get_mean_topic_vectors</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="n">two_dim_vectors</span><span class="p">):</span>
     <span class="sd">'''returns a list of centroid vectors from each predicted topic category'''</span>
     <span class="n">mean_topic_vectors</span> <span class="o">=</span> <span class="p">[]</span>
@@ -4654,9 +4616,9 @@ AAAASUVORK5CYII=
 <div class="prompt input_prompt">In [18]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="k">import</span> <span class="n">figure</span><span class="p">,</span> <span class="n">output_file</span><span class="p">,</span> <span class="n">show</span>
-<span class="kn">from</span> <span class="nn">bokeh.models</span> <span class="k">import</span> <span class="n">Label</span>
-<span class="kn">from</span> <span class="nn">bokeh.io</span> <span class="k">import</span> <span class="n">output_notebook</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">figure</span><span class="p">,</span> <span class="n">output_file</span><span class="p">,</span> <span class="n">show</span>
+<span class="kn">from</span> <span class="nn">bokeh.models</span> <span class="kn">import</span> <span class="n">Label</span>
+<span class="kn">from</span> <span class="nn">bokeh.io</span> <span class="kn">import</span> <span class="n">output_notebook</span>
 <span class="n">output_notebook</span><span class="p">()</span>
 
 <span class="n">colormap</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
@@ -4682,10 +4644,10 @@ AAAASUVORK5CYII=
 </div>
 <div class="output_area">
 <div class="prompt"></div>
-<div id="dc395157-3d0f-49a6-92c1-8cda62e5d46f"></div>
+<div id="d62709b7-7b18-44cf-8d01-faf9c4cee29f"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#dc395157-3d0f-49a6-92c1-8cda62e5d46f');
+var element = $('#d62709b7-7b18-44cf-8d01-faf9c4cee29f');
 
 (function(global) {
   function now() {
@@ -4844,10 +4806,10 @@ var element = $('#dc395157-3d0f-49a6-92c1-8cda62e5d46f');
 <div class="prompt input_prompt">In [19]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">top_3_words_lsa</span> <span class="o">=</span> <span class="n">get_top_n_words</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">lsa_keys</span><span class="p">,</span> <span class="n">small_document_term_matrix</span><span class="p">,</span> <span class="n">small_count_vectorizer</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">top_3_words_lsa</span> <span class="o">=</span> <span class="n">get_top_n_words</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">lsa_keys</span><span class="p">,</span> <span class="n">small_document_term_matrix</span><span class="p">,</span> <span class="n">small_count_vectorizer</span><span class="p">)</span>
 <span class="n">lsa_mean_topic_vectors</span> <span class="o">=</span> <span class="n">get_mean_topic_vectors</span><span class="p">(</span><span class="n">lsa_keys</span><span class="p">,</span> <span class="n">tsne_lsa_vectors</span><span class="p">)</span>
 
-<span class="n">plot</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"t-SNE Clustering of </span><span class="si">{}</span><span class="s2"> LSA Topics"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n_topics</span><span class="p">),</span> <span class="n">plot_width</span><span class="o">=</span><span class="mi">700</span><span class="p">,</span> <span class="n">plot_height</span><span class="o">=</span><span class="mi">700</span><span class="p">)</span>
+<span class="n">plot</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"t-SNE Clustering of {} LSA Topics"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n_topics</span><span class="p">),</span> <span class="n">plot_width</span><span class="o">=</span><span class="mi">700</span><span class="p">,</span> <span class="n">plot_height</span><span class="o">=</span><span class="mi">700</span><span class="p">)</span>
 <span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">tsne_lsa_vectors</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">tsne_lsa_vectors</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">colormap</span><span class="p">[</span><span class="n">lsa_keys</span><span class="p">])</span>
 
 <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_topics</span><span class="p">):</span>
@@ -5040,7 +5002,7 @@ You can access Timestamp as pandas.Timestamp
 <div class="prompt input_prompt">In [20]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="k">import</span> <span class="n">LatentDirichletAllocation</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">LatentDirichletAllocation</span>
 
 <span class="n">lda_model</span> <span class="o">=</span> <span class="n">LatentDirichletAllocation</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_topics</span><span class="p">,</span> <span class="n">learning_method</span><span class="o">=</span><span class="s1">'online'</span><span class="p">,</span> 
                                           <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -5063,7 +5025,7 @@ You can access Timestamp as pandas.Timestamp
 <div class="prompt input_prompt">In [21]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">lda_keys</span> <span class="o">=</span> <span class="n">get_keys</span><span class="p">(</span><span class="n">lda_topic_matrix</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">lda_keys</span> <span class="o">=</span> <span class="n">get_keys</span><span class="p">(</span><span class="n">lda_topic_matrix</span><span class="p">)</span>
 <span class="n">lda_categories</span><span class="p">,</span> <span class="n">lda_counts</span> <span class="o">=</span> <span class="n">keys_to_counts</span><span class="p">(</span><span class="n">lda_keys</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -5075,10 +5037,10 @@ You can access Timestamp as pandas.Timestamp
 <div class="prompt input_prompt">In [22]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">top_n_words_lda</span> <span class="o">=</span> <span class="n">get_top_n_words</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">lda_keys</span><span class="p">,</span> <span class="n">small_document_term_matrix</span><span class="p">,</span> <span class="n">small_count_vectorizer</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">top_n_words_lda</span> <span class="o">=</span> <span class="n">get_top_n_words</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">lda_keys</span><span class="p">,</span> <span class="n">small_document_term_matrix</span><span class="p">,</span> <span class="n">small_count_vectorizer</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">top_n_words_lda</span><span class="p">)):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">"Topic </span><span class="si">{}</span><span class="s2">: "</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">top_n_words_lda</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="k">print</span><span class="p">(</span><span class="s2">"Topic {}: "</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">top_n_words_lda</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -5115,8 +5077,8 @@ Topic 7:  govt nsw farmers trial drought pm act inquiry work new
 <div class="prompt input_prompt">In [23]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">top_3_words</span> <span class="o">=</span> <span class="n">get_top_n_words</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">lda_keys</span><span class="p">,</span> <span class="n">small_document_term_matrix</span><span class="p">,</span> <span class="n">small_count_vectorizer</span><span class="p">)</span>
-<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Topic </span><span class="si">{}</span><span class="s1">: </span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">top_3_words</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">lda_categories</span><span class="p">]</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">top_3_words</span> <span class="o">=</span> <span class="n">get_top_n_words</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">lda_keys</span><span class="p">,</span> <span class="n">small_document_term_matrix</span><span class="p">,</span> <span class="n">small_count_vectorizer</span><span class="p">)</span>
+<span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Topic {}: </span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">top_3_words</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">lda_categories</span><span class="p">]</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">lda_categories</span><span class="p">,</span> <span class="n">lda_counts</span><span class="p">)</span>
@@ -5410,7 +5372,7 @@ JUmSJEmtZsNVkiRJktRqNlwlSZIkSa1mw1WSJEmS1Gq/AVbFAtRloMx+AAAAAElFTkSuQmCC
 <div class="prompt input_prompt">In [24]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="k">import</span> <span class="n">TSNE</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.manifold</span> <span class="kn">import</span> <span class="n">TSNE</span>
 
 <span class="n">tsne_lda_model</span> <span class="o">=</span> <span class="n">TSNE</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">perplexity</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> 
                         <span class="n">n_iter</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
@@ -5451,10 +5413,10 @@ JUmSJEmtZsNVkiRJktRqNlwlSZIkSa1mw1WSJEmS1Gq/AVbFAtRloMx+AAAAAElFTkSuQmCC
 <div class="prompt input_prompt">In [25]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">top_3_words_lda</span> <span class="o">=</span> <span class="n">get_top_n_words</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">lda_keys</span><span class="p">,</span> <span class="n">small_document_term_matrix</span><span class="p">,</span> <span class="n">small_count_vectorizer</span><span class="p">)</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">top_3_words_lda</span> <span class="o">=</span> <span class="n">get_top_n_words</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">lda_keys</span><span class="p">,</span> <span class="n">small_document_term_matrix</span><span class="p">,</span> <span class="n">small_count_vectorizer</span><span class="p">)</span>
 <span class="n">lda_mean_topic_vectors</span> <span class="o">=</span> <span class="n">get_mean_topic_vectors</span><span class="p">(</span><span class="n">lda_keys</span><span class="p">,</span> <span class="n">tsne_lda_vectors</span><span class="p">)</span>
 
-<span class="n">plot</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"t-SNE Clustering of </span><span class="si">{}</span><span class="s2"> LDA Topics"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n_topics</span><span class="p">),</span> <span class="n">plot_width</span><span class="o">=</span><span class="mi">700</span><span class="p">,</span> <span class="n">plot_height</span><span class="o">=</span><span class="mi">700</span><span class="p">)</span>
+<span class="n">plot</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s2">"t-SNE Clustering of {} LDA Topics"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">n_topics</span><span class="p">),</span> <span class="n">plot_width</span><span class="o">=</span><span class="mi">700</span><span class="p">,</span> <span class="n">plot_height</span><span class="o">=</span><span class="mi">700</span><span class="p">)</span>
 <span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">tsne_lda_vectors</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="n">tsne_lda_vectors</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">colormap</span><span class="p">[</span><span class="n">lda_keys</span><span class="p">])</span>
 
 <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_topics</span><span class="p">):</span>
@@ -5638,7 +5600,7 @@ JUmSJEmtZsNVkiRJktRqNlwlSZIkSa1mw1WSJEmS1Gq/AVbFAtRloMx+AAAAAElFTkSuQmCC
 <div class="prompt input_prompt">In [26]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">big_sample_size</span> <span class="o">=</span> <span class="mi">100000</span> 
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">big_sample_size</span> <span class="o">=</span> <span class="mi">100000</span> 
 
 <span class="n">big_count_vectorizer</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">stop_words</span><span class="o">=</span><span class="s1">'english'</span><span class="p">,</span> <span class="n">max_features</span><span class="o">=</span><span class="mi">40000</span><span class="p">)</span>
 <span class="n">big_text_sample</span> <span class="o">=</span> <span class="n">reindexed_data</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">big_sample_size</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span>
@@ -5696,9 +5658,9 @@ iteration: 10 of max_iter: 10
 <div class="prompt input_prompt">In [27]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">yearly_data</span> <span class="o">=</span> <span class="p">[]</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">yearly_data</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2003</span><span class="p">,</span><span class="mi">2017</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
-    <span class="n">yearly_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reindexed_data</span><span class="p">[</span><span class="s1">'</span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">())</span>
+    <span class="n">yearly_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reindexed_data</span><span class="p">[</span><span class="s1">'{}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">())</span>
 
 <span class="n">yearly_topic_matrices</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="n">yearly_data</span><span class="p">:</span>
@@ -5716,9 +5678,9 @@ iteration: 10 of max_iter: 10
     <span class="n">yearly_counts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span>
 
 <span class="n">yearly_topic_counts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">yearly_counts</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">2003</span><span class="p">,</span><span class="mi">2017</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">yearly_topic_counts</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Topic </span><span class="si">{}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_topics</span><span class="p">)]</span>
+<span class="n">yearly_topic_counts</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Topic {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_topics</span><span class="p">)]</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="n">yearly_topic_counts</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">yearly_topic_counts</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -5763,14 +5725,14 @@ iteration: 10 of max_iter: 10
 <div class="prompt input_prompt">In [28]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">complete_keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="n">yearly_keys</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">year</span><span class="p">]</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">complete_keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="n">yearly_keys</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">year</span><span class="p">]</span>
 <span class="n">complete_topic_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">yearly_topic_matrices</span><span class="p">)</span>
 <span class="n">complete_document_term_matrix</span> <span class="o">=</span> <span class="n">big_count_vectorizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">reindexed_data</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">())</span>
 
 <span class="n">top_n_words</span> <span class="o">=</span> <span class="n">get_top_n_words</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">complete_keys</span><span class="p">,</span> <span class="n">complete_document_term_matrix</span><span class="p">,</span> <span class="n">big_count_vectorizer</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">top_n_words</span><span class="p">)):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">'Topic </span><span class="si">{}</span><span class="s1">: '</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">top_n_words</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="k">print</span><span class="p">(</span><span class="s1">'Topic {}: '</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">top_n_words</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -5807,7 +5769,7 @@ Topic 7:  police crash new day report world probe child sex set
 <div class="prompt input_prompt">In [29]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Topic </span><span class="si">{}</span><span class="s1">: </span><span class="se">\n</span><span class="s1"> '</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' '</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">topic</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">for</span> <span class="n">topic</span> <span class="ow">in</span> <span class="n">top_n_words</span><span class="p">][</span><span class="n">i</span><span class="p">][:</span><span class="mi">3</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_topics</span><span class="p">)]</span>
+<div class=" highlight hl-ipython2"><pre><span></span><span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Topic {}: </span><span class="se">\n</span><span class="s1"> '</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' '</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">topic</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">for</span> <span class="n">topic</span> <span class="ow">in</span> <span class="n">top_n_words</span><span class="p">][</span><span class="n">i</span><span class="p">][:</span><span class="mi">3</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_topics</span><span class="p">)]</span>
 
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
 <span class="n">sb</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">yearly_topic_counts</span><span class="p">,</span> <span class="n">xticklabels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"YlGnBu"</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
@@ -6341,10 +6303,10 @@ k0F+RERERMSYySA/IiIiImLM/H+NPAbpBXEICQAAAABJRU5ErkJggg==
     <div class="container">
 <div class="row">
   <ul class="col-sm-6 list-inline">
-      <li class="list-inline-item"><a href="http://rcushen.github.io/authors.html">Authors</a></li>
-    <li class="list-inline-item"><a href="http://rcushen.github.io/archives.html">Archives</a></li>
-    <li class="list-inline-item"><a href="http://rcushen.github.io/categories.html">Categories</a></li>
-      <li class="list-inline-item"><a href="http://rcushen.github.io/tags.html">Tags</a></li>
+      <li class="list-inline-item"><a href="/authors.html">Authors</a></li>
+    <li class="list-inline-item"><a href="/archives.html">Archives</a></li>
+    <li class="list-inline-item"><a href="/categories.html">Categories</a></li>
+      <li class="list-inline-item"><a href="/tags.html">Tags</a></li>
   </ul>
   <p class="col-sm-6 text-sm-right text-muted">
     Generated by <a href="https://github.com/getpelican/pelican" target="_blank">Pelican</a>
