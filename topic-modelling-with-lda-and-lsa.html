@@ -1050,7 +1050,9 @@ h6:hover .anchor-link {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><em>In this post, two typical NLP techniques are explored in relation to the problem of topic modelling. These are applied to the 'A Million News Headlines' dataset, which is a corpus of over one million short news article headlines published by the ABC.</em></p>
-<h1 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">¶</a></h1><h2 id="Motivating-the-Problem">Motivating the Problem<a class="anchor-link" href="#Motivating-the-Problem">¶</a></h2><p>Topic modelling is a classic problem in the domain of natural language processing. Given a corpus of text $\mathcal{C}$ composed of $n$ individual documents, the goal is to uncover any latent topic structure that may exist within the data. In other words, we are seeking to discover the topics with which a given series of documents are concerned. However, since we do not know a priori exactly what these topics are, this is an <em>unsupervised</em> problem; we have only unlabelled input data, and must determine the topic categories endogenously. LSA and LDA represent two distinct approaches to solving this problem, with each drawing upon very different mathematical procedures. As we shall however see, both can be implemented in very similar ways, affording us ample scope for an exploration of their respective strengths and weaknesses.</p>
+<h1 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">¶</a></h1><h2 id="Motivating-the-Problem">Motivating the Problem<a class="anchor-link" href="#Motivating-the-Problem">¶</a></h2><p>Topic modelling is a classic problem in the domain of natural language processing. Given a corpus of text $\mathcal{C}$ composed of $n$ individual documents, the goal is to uncover any latent topic structure that may exist within the data. In other words, we are seeking to discover the set of topics $\mathcal{T}$ with which a given series of documents are concerned, and having done so, sort these documents into the differing topic categories. However, since we do not know a priori exactly what these topics are, this is an <em>unsupervised</em> problem; we have only unlabelled input data, and must determine the topic categories endogenously.</p>
+<p><em>If this sounds like the more familiar problem of clustering, this is no coincidence. we are essentially seeking to cluster...</em></p>
+<p>LSA and LDA represent two distinct approaches to solving this problem. Each draws upon very different mathematical procedures, and will have varying success depending upon the type of text data that are supplied as input. As we shall however see, both can be implemented in very similar ways, affording us ample scope for an exploration of their respective strengths and weaknesses.</p>
 <h2 id="The-Dataset">The Dataset<a class="anchor-link" href="#The-Dataset">¶</a></h2><p>The dataset which we will be using for our exploration of topic modelling is the 'A Million News Headlines' corpus, published by the ABC. This is a set of over one million news article headlines taken from the Australian public broadcaster's news division, collected between 2003 and 2017. Further details can be found on <a href="https://www.kaggle.com/therohk/million-headlines">the Kaggle page</a>. In their raw form, the headlines are available simply as a series of text strings, accompanied by a publish date. Some examples are given below.</p>
 <table>
 <thead><tr>
@@ -1075,7 +1077,7 @@ h6:hover .anchor-link {
 </table>
 <p>More typically, topic modelling is conducted upon longer-form text data – perhaps entire news articles, or extracts from novels, or Wikipedia pages. For intuitive reasons, longer text samples are indeed preferable; more words means a richer snapshot of potential topics and a more diverse topic vocabulary. However, thanks to the succinct and lucid nature of news article headlines, we can reasonably expect a robust kernel of semantic content, and paired with the massive amount of datapoints available, it is unlikely that our analysis will suffer for this lack of depth.</p>
 <p>As with most forms of text analysis, the text data must first be preprocessed before it can be used as input to any algorithm (for the moment, we will disregard the publish date). In our case, this will mean converting each headline into a (very long) vector, where each entry corresponds to the number of occurences of a particular word. Effectively, this is equivalent to walking through the string with a dictionary in hand, adding a check next to each word in the dictionary as they appear. The resulting list of word counts then becomes the vector associated with that string.</p>
-<p>$$ \text{''the cat in the hat''} \longrightarrow \begin{bmatrix} 1 \\ 0 \\ 2 \\ 0 \\ 0 \\ \vdots \\ 1 \\ 0 \end{bmatrix}, \quad \text{which references} \, \begin{bmatrix} \text{cat} \\ \text{fantastic} \\ \text{the} \\ \text{fox} \\ \text{machine} \\ \vdots \\ \text{in} \\ \text{chocolate} \end{bmatrix}$$</p>
+<p>$$ \text{''the cat in the hat''} \longrightarrow \begin{bmatrix} 1 \\ 0 \\ 2 \\ 0 \\ 0 \\ \vdots \\ 1 \\ 0 \end{bmatrix} \in \begin{bmatrix} \text{cat} \\ \text{fantastic} \\ \text{the} \\ \text{fox} \\ \text{machine} \\ \vdots \\ \text{in} \\ \text{chocolate} \end{bmatrix}$$</p>
 <p>This approach is known as a <strong>bag of words</strong> representation, in that it reduces each text string to just a collection of word counts and disregards the actual ordering of words. Of course, encoding features in this way involves a loss of information, and a more sophisticated approach might attempt to recognise specific sequences of words – but for our initial implementation, this is an acceptable simplification. This process of feature construction—taking input data and projecting it into a tractable and meaningful feature space—is as much an art as it is a science, and we must always remain conscious of the bias-variance tradeoff...</p>
 <p><em>It is worth noting that this process of vectorisation has several variations. Rather than the naive approach taken above, a common alternative is <a href="https://en.wikipedia.org/wiki/Tf–idf">term frequency–inverse document frequency</a> or TFIDF. This computes the relative frequency of words in a document compared to the whole corpus, partially in attempt to counteract the greater significance that a longer document would have over a shorter one if raw counts were used. However, given that we are working with a corpus of text strings of relatively equal length—and moreover, strings which are all very short—the naive approach is perfectly reasonable.</em></p>
 <p>$$ \begin{bmatrix} \text{the cat in the hat} 
@@ -1093,7 +1095,11 @@ h6:hover .anchor-link {
 \end{bmatrix}
 }_{D} $$
 Vectorizing all $n$ headlines in this manner will ultimately yield an $n \times K$ <strong>document-term matrix</strong>, where each row corresponds to a headline and each column corresponds to a distinct word. The exact set of words chosen—i.e. our actual feature set—must be selected exogenously: the goal is to generate a diverse feature space while at the same time preventing the data from being too high-dimensional. For this reason, we typically use the top $M$ most frequent words in the corpus while also omitting a set of common 'stop words' – trivial prepositions and conjunctions (e.g. the, in, at, that, to). This 'middle band' of vocabulary should then give rise to a concise but meaningful set of features (words) that suffices to capture the key variation in the data. Thus we have successfully prepared our data: the table of one million headline text strings has been converted to a document-term matrix $D$, which can now be used as input to our topic model.</p>
-<h2 id="A-Brief-Review-of-LSA-and-LDA">A Brief Review of LSA and LDA<a class="anchor-link" href="#A-Brief-Review-of-LSA-and-LDA">¶</a></h2><p>Before embarking upon our analysis, let us briefly outline the two techniques that are to be employed. The first of these is Latent Semantic Analysis, more typically referred to as LSA. At its heart, this is fundamentally just a matrix factorisation procedure – which should not be surprising, given we are working on an unsupervised learning problem. Given a document-term matrix $D$, the algorithm decomposes the data according to its $r$ largest singular values...</p>
+<h2 id="A-Brief-Review-of-LSA-and-LDA">A Brief Review of LSA and LDA<a class="anchor-link" href="#A-Brief-Review-of-LSA-and-LDA">¶</a></h2><p>Before embarking upon our analysis, let us briefly outline the two techniques that are to be employed. The first of these is Latent Semantic Analysis, more typically referred to as LSA. At its heart, this is fundamentally just a matrix factorisation procedure: given a document-term matrix $D$, the algorithm first performs singular value decomposition, and then truncates all but the $r$ largest singular values. Instead of the usual SVD factorisation,
+    $$ D = U \Sigma V^T $$
+we therefore use
+    $$ T = U \hat{\Sigma} V^T $$
+where $\hat{\Sigma}$ is the matrix of singular values $\Sigma$ with all but the $r$ largest singular values set to zero. The resulting matrix $T$ is thus of reduced rank, and we refer to it as the <strong>topic matrix</strong>. Each of its $n$ rows will represent a document, and each of the first $r$ columns will correspond to a topic; the $(i, j)$th entry can then be considered a measure of the presence of topic $j$ in document $i$. To actually sort a document into a category, we simply take the $\arg \max$ of each row, as this will correspond to the most strongly-represented topic. Note too that $r$ is a parameter here, and must be supplied as an input to the algorithm. In other words, the number of topic categories must be provided exogenously...</p>
 <p>Meanwhile, Latent Dirichilet Allocation takes an entirely different approach. It is instead a generative probabilistic process...</p>
 <h1 id="Analysis">Analysis<a class="anchor-link" href="#Analysis">¶</a></h1><p>Having set the scene, we can now dive into developing our topic models. All relevant code is featured below as extracts from a Jupyter Notebook, though a more workable Python script can be found on my GitHub page.</p>
 <h2 id="Exploratory-Data-Analysis">Exploratory Data Analysis<a class="anchor-link" href="#Exploratory-Data-Analysis">¶</a></h2><p>As usual, it is prudent to begin with some basic exploratory analysis. After the usual import statements...</p>
@@ -1516,6 +1522,7 @@ JEmSemBiLUmSJPXAxFqSJEnqgYm1JEmS1AMTa0mSJKkH/z9F5M0FJCOBSQAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>Even from this initial distribution, several topics are hinted at. Headlines describing crime and violence seem to appear frequently ('police', 'court', 'crash', 'death' and 'charged;), and politics also demonstrates a presence ('govt', 'council', 'nsw', 'australia', 'qld', 'wa'). This kind of structure is certainly encouraging for our later application of LSA and LDA.</p>
 <p>Next we generate a histogram of headline word lengths, and use <a href="https://en.wikipedia.org/wiki/Part-of-speech_tagging">part-of-speech tagging</a> to understand the types of words used across the corpus. This can be done using the TextBlob library, which incorporates a speech tagging function <code>pos_tags</code> that can be used to generate a list of tagged words for each headline. A complete list of such word tags is available <a href="https://www.clips.uantwerpen.be/pages/MBSP-tags">here</a>.</p>
 </div>
 </div>
@@ -2175,7 +2182,7 @@ pAGYiEuSJEkDMBGXJEmSBvD/AdKJvypm+sGWAAAAAElFTkSuQmCC
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>From the histogram, we can see that the headlines are approximately normally distributed in length, with most composed of between five and eight words. This certainly validates our naive use of word counts over TFIDF! Meanwhile, the results of the POS tagging are also encouraging: a significant portion of the vocabulary in the corpus are nouns (NN, NNS), which are more likely to be topic-specific than any other part of speech. This bodes well...</p>
+<p>From the histogram, we can see that the headlines are approximately normally distributed in length, with most composed of between five and eight words. This certainly validates our naive use of word counts over TFIDF! Meanwhile, the results of the POS tagging are also encouraging: a significant portion of the vocabulary in the corpus are nouns (NN, NNS), which are more likely to be topic-specific than any other part of speech.</p>
 </div>
 </div>
 </div>
@@ -2183,7 +2190,7 @@ pAGYiEuSJEkDMBGXJEmSBvD/AdKJvypm+sGWAAAAAElFTkSuQmCC
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Topic-Modelling">Topic Modelling<a class="anchor-link" href="#Topic-Modelling">¶</a></h2><p>We can now turn to apply the two topic modelling algorithms. For computational reasons, we will start with a small subsample of the data.</p>
+<h2 id="Topic-Modelling">Topic Modelling<a class="anchor-link" href="#Topic-Modelling">¶</a></h2><p>We can now turn to apply the two topic modelling algorithms. To speed up computation, we start by using a small subsample of the data.</p>
 </div>
 </div>
 </div>
@@ -2233,8 +2240,8 @@ Headline after vectorization:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>It is worth noting here that the document-term matrix has been stored by SciPy as a sparse matrix. This is an key idiosyncracy that often arises in NLP analysis: given we are working with such high-dimensional features, it is crucial that data be stored as efficiently as possible. Maintaining $1,000,000 \times 40,000 = 40$ billion floating point numbers in memory is certainly not feasible! Luckily, the bag of words model means that most of the entries in a document-term matrix are zero, since most pieces of text are composed of only a small fraction of the total allowed vocabulary.</p>
-<p>Thus we have constructed our input data, <code>document_term_matrix</code>, and can now actually implement a topic modelling algorithm. Both LSA and LDA will take our document-term matrix as input and yield an $n \times N$ topic matrix as output, where $N$ is the number of topic categories (which we supply as a parameter). For the moment, we shall take this to be 8.</p>
+<p>It is worth noting here that the document-term matrix has been stored by SciPy as a sparse matrix. This is an key idiosyncracy that often arises in NLP analysis: given we are working with such high-dimensional features, it is crucial that data be stored as efficiently as possible. Maintaining $1,000,000 \times 40,000 = 40 \ \text{billion}$ floating point numbers in memory is certainly not feasible! Luckily, the bag of words model means that most of the entries in a document-term matrix are zero, since most pieces of text are composed of only a small fraction of the total allowed vocabulary.</p>
+<p>Thus we have constructed our input data, <code>document_term_matrix</code>, and can now actually implement a topic modelling algorithm. Both LSA and LDA will take our document-term matrix as input and yield an $n \times N$ topic matrix as output, where $N$ is the number of topic categories (which we supply as a parameter, as discussed above). For the moment, 8 would seem to be a reasonable number; any more and we would risk being overly granular with the topic categories, any fewer and we would be grouping together potentially unrelated content. Nonetheless, this can be experimented with later.</p>
 </div>
 </div>
 </div>
@@ -2264,8 +2271,8 @@ Headline after vectorization:
 <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">TruncatedSVD</span>
 
-<span class="n">lsa_model</span> <span class="o">=</span> <span class="n">TruncatedSVD</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_topics</span><span class="p">)</span>
-<span class="n">lsa_topic_matrix</span> <span class="o">=</span> <span class="n">lsa_model</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">document_term_matrix</span><span class="p">)</span>
+<span class="n">lsa_model</span> <span class="o">=</span> <span class="n">TruncatedSVD</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_topics</span><span class="p">)</span> <span class="c1"># instantiates the LSA model</span>
+<span class="n">lsa_topic_matrix</span> <span class="o">=</span> <span class="n">lsa_model</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">document_term_matrix</span><span class="p">)</span> <span class="c1"># runs the truncated SVD</span>
 </pre></div>
 </div>
 </div>
@@ -2875,10 +2882,10 @@ iIhRyuI5IiIiImKUsniOiIiIiBilLJ4jIiIiIkbp/wE8skingb8BmQAAAABJRU5ErkJggg==
 </div>
 <div class="output_area">
 <div class="prompt"></div>
-<div id="af092b12-8f7a-4444-b160-a1cfb7e31448"></div>
+<div id="6be9c13d-a101-4e14-9af1-475be3c2bd54"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#af092b12-8f7a-4444-b160-a1cfb7e31448');
+var element = $('#6be9c13d-a101-4e14-9af1-475be3c2bd54');
 
 (function(root) {
   function now() {
