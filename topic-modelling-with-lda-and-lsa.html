@@ -1050,8 +1050,7 @@ h6:hover .anchor-link {
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><em>In this post, two typical NLP techniques are explored in relation to the problem of topic modelling. These are applied to the 'A Million News Headlines' dataset, which is a corpus of over one million short news article headlines published by the ABC.</em></p>
-<h1 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">¶</a></h1><h2 id="Motivating-the-Problem">Motivating the Problem<a class="anchor-link" href="#Motivating-the-Problem">¶</a></h2><p>Topic modelling is a classic problem in the domain of natural language processing. Given a corpus of text $\mathcal{C}$ composed of $n$ individual documents, the goal is to uncover any latent topic structure that may exist within the data. In other words, we are seeking to discover the set of topics $\mathcal{T}$ with which a given series of documents are concerned, and having done so, sort these documents into the differing topic categories. However, since we do not know a priori exactly what these topics are, this is an <em>unsupervised</em> problem; we have only unlabelled input data, and must determine the topic categories endogenously.</p>
-<p><em>If this sounds like the more familiar problem of clustering, this is no coincidence. we are essentially seeking to cluster...</em></p>
+<h1 id="Introduction">Introduction<a class="anchor-link" href="#Introduction">¶</a></h1><h2 id="Motivating-the-Problem">Motivating the Problem<a class="anchor-link" href="#Motivating-the-Problem">¶</a></h2><p>Topic modelling is a classic problem in the domain of natural language processing. Given a corpus of text $\mathcal{C}$ composed of $n$ individual documents, the goal is to uncover any latent topic structure that may exist within the data. In other words, we are seeking to discover the set of topics $\mathcal{T}$ with which a given series of documents are concerned, and having done so, sort these documents into the differing topic categories. Since we do not know a priori exactly what these topics are, this is an <em>unsupervised</em> problem: we have only unlabelled input data, and must determine the topic categories endogenously. In many respects, topic modelling is therefore similar to a clustering problem. We are essentially just seeking to cluster the text headlines, where the clusters have an additional interpretation as topic categories – the main difference is that we are working in some abstract 'word' space, rather than a more conventional Euclidean vector space in $\mathbb{R}^p$.</p>
 <p>LSA and LDA represent two distinct approaches to solving this problem. Each draws upon very different mathematical procedures, and will have varying success depending upon the type of text data that are supplied as input. As we shall however see, both can be implemented in very similar ways, affording us ample scope for an exploration of their respective strengths and weaknesses.</p>
 <h2 id="The-Dataset">The Dataset<a class="anchor-link" href="#The-Dataset">¶</a></h2><p>The dataset which we will be using for our exploration of topic modelling is the 'A Million News Headlines' corpus, published by the ABC. This is a set of over one million news article headlines taken from the Australian public broadcaster's news division, collected between 2003 and 2017. Further details can be found on <a href="https://www.kaggle.com/therohk/million-headlines">the Kaggle page</a>. In their raw form, the headlines are available simply as a series of text strings, accompanied by a publish date. Some examples are given below.</p>
 <table>
@@ -1078,8 +1077,9 @@ h6:hover .anchor-link {
 <p>More typically, topic modelling is conducted upon longer-form text data – perhaps entire news articles, or extracts from novels, or Wikipedia pages. For intuitive reasons, longer text samples are indeed preferable; more words means a richer snapshot of potential topics and a more diverse topic vocabulary. However, thanks to the succinct and lucid nature of news article headlines, we can reasonably expect a robust kernel of semantic content, and paired with the massive amount of datapoints available, it is unlikely that our analysis will suffer for this lack of depth.</p>
 <p>As with most forms of text analysis, the text data must first be preprocessed before it can be used as input to any algorithm (for the moment, we will disregard the publish date). In our case, this will mean converting each headline into a (very long) vector, where each entry corresponds to the number of occurences of a particular word. Effectively, this is equivalent to walking through the string with a dictionary in hand, adding a check next to each word in the dictionary as they appear. The resulting list of word counts then becomes the vector associated with that string.</p>
 <p>$$ \text{''the cat in the hat''} \longrightarrow \begin{bmatrix} 1 \\ 0 \\ 2 \\ 0 \\ 0 \\ \vdots \\ 1 \\ 0 \end{bmatrix} \in \begin{bmatrix} \text{cat} \\ \text{fantastic} \\ \text{the} \\ \text{fox} \\ \text{machine} \\ \vdots \\ \text{in} \\ \text{chocolate} \end{bmatrix}$$</p>
-<p>This approach is known as a <strong>bag of words</strong> representation, in that it reduces each text string to just a collection of word counts and disregards the actual ordering of words. Of course, encoding features in this way involves a loss of information, and a more sophisticated approach might attempt to recognise specific sequences of words – but for our initial implementation, this is an acceptable simplification. This process of feature construction—taking input data and projecting it into a tractable and meaningful feature space—is as much an art as it is a science, and we must always remain conscious of the bias-variance tradeoff...</p>
+<p>This approach is known as a <strong>bag of words</strong> representation, in that it reduces each text string to just a collection of word counts and disregards the actual ordering of words. Of course, encoding features in this way involves a loss of information, and a more sophisticated approach might attempt to recognise specific sequences of words – but for our initial implementation, this is an acceptable simplification. <em>The process of taking input data and projecting it into a tractable and meaningful feature space can be as much an art as a science, and moreover, presents yet another manifestation of the bias-variance tradeoff...</em></p>
 <p><em>It is worth noting that this process of vectorisation has several variations. Rather than the naive approach taken above, a common alternative is <a href="https://en.wikipedia.org/wiki/Tf–idf">term frequency–inverse document frequency</a> or TFIDF. This computes the relative frequency of words in a document compared to the whole corpus, partially in attempt to counteract the greater significance that a longer document would have over a shorter one if raw counts were used. However, given that we are working with a corpus of text strings of relatively equal length—and moreover, strings which are all very short—the naive approach is perfectly reasonable.</em></p>
+<p>Vectorizing all $n$ headlines in this manner will ultimately yield an $n \times K$ <strong>document-term matrix</strong>, where each row corresponds to a headline and each column corresponds to a distinct word. The exact set of words chosen—i.e. our actual feature set—must be selected exogenously: the goal is to generate a diverse feature space while at the same time preventing the data from being too high-dimensional. For this reason, we typically use the top $M$ most frequent words in the corpus while also omitting a set of common 'stop words' – trivial prepositions and conjunctions (e.g. the, in, at, that, to). This 'middle band' of vocabulary should then give rise to a concise but meaningful set of features (words) that suffices to capture the key variation in the data. Thus we have successfully prepared our data: the table of one million headline text strings has been converted to a document-term matrix $D$, which can now be used as input to our topic model.</p>
 <p>$$ \begin{bmatrix} \text{the cat in the hat} 
 \\ \text{green eggs and ham}
 \\ \vdots
@@ -1093,15 +1093,14 @@ h6:hover .anchor-link {
 \vdots & \vdots & \vdots & \vdots & \vdots & & \vdots & \vdots \\
 0 & 0 & 0 & 1 & 0 & \cdots & 0 & 0
 \end{bmatrix}
-}_{D} $$
-Vectorizing all $n$ headlines in this manner will ultimately yield an $n \times K$ <strong>document-term matrix</strong>, where each row corresponds to a headline and each column corresponds to a distinct word. The exact set of words chosen—i.e. our actual feature set—must be selected exogenously: the goal is to generate a diverse feature space while at the same time preventing the data from being too high-dimensional. For this reason, we typically use the top $M$ most frequent words in the corpus while also omitting a set of common 'stop words' – trivial prepositions and conjunctions (e.g. the, in, at, that, to). This 'middle band' of vocabulary should then give rise to a concise but meaningful set of features (words) that suffices to capture the key variation in the data. Thus we have successfully prepared our data: the table of one million headline text strings has been converted to a document-term matrix $D$, which can now be used as input to our topic model.</p>
+}_{D} $$</p>
 <h2 id="A-Brief-Review-of-LSA-and-LDA">A Brief Review of LSA and LDA<a class="anchor-link" href="#A-Brief-Review-of-LSA-and-LDA">¶</a></h2><p>Before embarking upon our analysis, let us briefly outline the two techniques that are to be employed. The first of these is Latent Semantic Analysis, more typically referred to as LSA. At its heart, this is fundamentally just a matrix factorisation procedure: given a document-term matrix $D$, the algorithm first performs singular value decomposition, and then truncates all but the $r$ largest singular values. Instead of the usual SVD factorisation,
     $$ D = U \Sigma V^T $$
 we therefore use
     $$ T = U \hat{\Sigma} V^T $$
-where $\hat{\Sigma}$ is the matrix of singular values $\Sigma$ with all but the $r$ largest singular values set to zero. The resulting matrix $T$ is thus of reduced rank, and we refer to it as the <strong>topic matrix</strong>. Each of its $n$ rows will represent a document, and each of the first $r$ columns will correspond to a topic; the $(i, j)$th entry can then be considered a measure of the presence of topic $j$ in document $i$. To actually sort a document into a category, we simply take the $\arg \max$ of each row, as this will correspond to the most strongly-represented topic. Note too that $r$ is a parameter here, and must be supplied as an input to the algorithm. In other words, the number of topic categories must be provided exogenously...</p>
+where $\hat{\Sigma}$ is the matrix of singular values $\Sigma$ with all but the $r$ largest singular values set to zero. The resulting matrix $T$ is thus of reduced rank, and is referred to as the <strong>topic matrix</strong>. Each of its $n$ rows will represent a document, and each of the first $r$ columns will correspond to a topic; the $(i, j)$th entry can then be considered a measure of the presence of topic $j$ in document $i$. To actually sort a document into a topic category, we simply take the $\arg \max$ of each row, as this will correspond to the most strongly-represented topic. Note too that $r$ is a parameter here, and must be supplied as an input to the algorithm. In other words, the number of topic categories must be provided exogenously – not all of the decision are made internally by the algorithm.</p>
 <p>Meanwhile, Latent Dirichilet Allocation takes an entirely different approach. It is instead a generative probabilistic process...</p>
-<h1 id="Analysis">Analysis<a class="anchor-link" href="#Analysis">¶</a></h1><p>Having set the scene, we can now dive into developing our topic models. All relevant code is featured below as extracts from a Jupyter Notebook, though a more workable Python script can be found on my GitHub page.</p>
+<h1 id="Analysis">Analysis<a class="anchor-link" href="#Analysis">¶</a></h1><p>Having set the scene, we can now dive into developing our topic models. All relevant code is featured below as extracts from a Jupyter Notebook, though a more workable Python script can be found the GitHub page linked above.</p>
 <h2 id="Exploratory-Data-Analysis">Exploratory Data Analysis<a class="anchor-link" href="#Exploratory-Data-Analysis">¶</a></h2><p>As usual, it is prudent to begin with some basic exploratory analysis. After the usual import statements...</p>
 </div>
 </div>
@@ -2190,7 +2189,7 @@ pAGYiEuSJEkDMBGXJEmSBvD/AdKJvypm+sGWAAAAAElFTkSuQmCC
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Topic-Modelling">Topic Modelling<a class="anchor-link" href="#Topic-Modelling">¶</a></h2><p>We can now turn to apply the two topic modelling algorithms. To speed up computation, we start by using a small subsample of the data.</p>
+<h2 id="Topic-Modelling">Topic Modelling<a class="anchor-link" href="#Topic-Modelling">¶</a></h2><p>We now turn to apply the two topic modelling algorithms. To speed up computation, we start by using just a small subsample of the data.</p>
 </div>
 </div>
 </div>
@@ -2240,7 +2239,7 @@ Headline after vectorization:
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>It is worth noting here that the document-term matrix has been stored by SciPy as a sparse matrix. This is an key idiosyncracy that often arises in NLP analysis: given we are working with such high-dimensional features, it is crucial that data be stored as efficiently as possible. Maintaining $1,000,000 \times 40,000 = 40 \ \text{billion}$ floating point numbers in memory is certainly not feasible! Luckily, the bag of words model means that most of the entries in a document-term matrix are zero, since most pieces of text are composed of only a small fraction of the total allowed vocabulary.</p>
+<p>It is worth noting here that the document-term matrix has been stored by SciPy as a sparse matrix. This is a key idiosyncracy that often arises in NLP analysis: given we are working with such high-dimensional features, it is crucial that data be stored as efficiently as possible. Maintaining $1,000,000 \times 40,000 = 40 \ \text{billion}$ floating point numbers in memory is certainly not feasible! Luckily, the bag of words model means that most of the entries in a document-term matrix are zero, since most pieces of text are composed of only a small fraction of the total allowed vocabulary. As such the document-term matrix $D$ is highly sparse, with only a small fraction of nonzero entries.</p>
 <p>Thus we have constructed our input data, <code>document_term_matrix</code>, and can now actually implement a topic modelling algorithm. Both LSA and LDA will take our document-term matrix as input and yield an $n \times N$ topic matrix as output, where $N$ is the number of topic categories (which we supply as a parameter, as discussed above). For the moment, 8 would seem to be a reasonable number; any more and we would risk being overly granular with the topic categories, any fewer and we would be grouping together potentially unrelated content. Nonetheless, this can be experimented with later.</p>
 </div>
 </div>
@@ -2271,8 +2270,8 @@ Headline after vectorization:
 <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">TruncatedSVD</span>
 
-<span class="n">lsa_model</span> <span class="o">=</span> <span class="n">TruncatedSVD</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_topics</span><span class="p">)</span> <span class="c1"># instantiates the LSA model</span>
-<span class="n">lsa_topic_matrix</span> <span class="o">=</span> <span class="n">lsa_model</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">document_term_matrix</span><span class="p">)</span> <span class="c1"># runs the truncated SVD</span>
+<span class="n">lsa_model</span> <span class="o">=</span> <span class="n">TruncatedSVD</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_topics</span><span class="p">)</span> <span class="c1"># Instantiates the LSA model</span>
+<span class="n">lsa_topic_matrix</span> <span class="o">=</span> <span class="n">lsa_model</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">document_term_matrix</span><span class="p">)</span> <span class="c1"># Runs the truncated SVD</span>
 </pre></div>
 </div>
 </div>
@@ -2772,7 +2771,8 @@ iIhRyuI5IiIiImKUsniOiIiIiBilLJ4jIiIiIkbp/wE8skingb8BmQAAAABJRU5ErkJggg==
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>However, this does not provide a great point of comparison with other clustering algorithms. In order to properly contrast LSA with LDA we instead use a dimensionality-reduction technique called $t$-SNE, which will also serve to better illuminate the success of the clustering process. $t$-SNE takes each of the $n$ vectors from the topic matrix and projects them from $N$ dimensions to two dimensions, such that they can be visualised in a scatter plot. This projection highlights the fact that topic modelling is indeed fundamentally an exercise in clustering; we take text strings as inputs, and sort them into clusters, where each cluster can be interpreted as a distinct topic.</p>
+<p>Several insights are apparent here. It is clear that LSA has successfully delineated some intuitive topic categories: Topics 0 and 2 appear to be 'Crime', Topic 4 could be 'Legal Proceedings', Topic 5 'National Politics', and Topic 2 'World Affairs'. The distribution of topics is also non-uniform, suggesting—as would be expected—that certain topics are more prevalent than others in news reporting. Both of these outcomes therefore represent confirmations of a prior belief, which is encouraging.</p>
+<p>However, this output does not provide a great point of comparison with other clustering algorithms. In order to properly contrast LSA with LDA we instead use a dimensionality-reduction technique called $t$-SNE, which will also serve to better illuminate the success of the clustering process. $t$-SNE takes each of the $n$ vectors from the topic matrix and projects them from $N$ dimensions to two dimensions, such that they can be visualised in a scatter plot.</p>
 <p>The way $t$-SNE functions is a little opaque, and it is beyond the scope of this post to discuss its workings in detail (see <a href="https://distill.pub/2016/misread-tsne/">this article</a> for a great exploration of its properties), though it has been proven to yield great results on non-linear datasets such as our topic matrix. It can also be implemented in SKLearn, though it has a relatively long runtime even on our small sample.</p>
 </div>
 </div>
@@ -2882,10 +2882,10 @@ iIhRyuI5IiIiImKUsniOiIiIiBilLJ4jIiIiIkbp/wE8skingb8BmQAAAABJRU5ErkJggg==
 </div>
 <div class="output_area">
 <div class="prompt"></div>
-<div id="6be9c13d-a101-4e14-9af1-475be3c2bd54"></div>
+<div id="befaf4ca-d0e7-4b29-ad17-c833f8197f3e"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#6be9c13d-a101-4e14-9af1-475be3c2bd54');
+var element = $('#befaf4ca-d0e7-4b29-ad17-c833f8197f3e');
 
 (function(root) {
   function now() {
@@ -3230,7 +3230,7 @@ var element = $('#6be9c13d-a101-4e14-9af1-475be3c2bd54');
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Evidently, this is a bit a of a failed result. We have failed to reach any great degree of separation across the topic categories, and it is difficult to tell whether this can be attributed to the LSA decomposition or instead the $t$-SNE dimensionality reduction process. Let's move forward and experiment with another topic modelling technique.</p>
+<p>Evidently, this is a bit a of a failed result. While the topic categories derived above appeared to be generally interpretable, separation between these categories is poor. Such a lack of clarity was also hinted at earlier, when we generated the top ten words in each topic: several words were frequent in multiple topics, suggesting a failure to clearly distinguish between content. Nonetheless, it is difficult to tell whether this can be attributed to the LSA decomposition or instead the $t$-SNE dimensionality reduction process. Let's move forward and experiment with another topic modelling technique.</p>
 </div>
 </div>
 </div>
@@ -3249,8 +3249,8 @@ var element = $('#6be9c13d-a101-4e14-9af1-475be3c2bd54');
 <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">LatentDirichletAllocation</span>
 
-<span class="n">lda_model</span> <span class="o">=</span> <span class="n">LatentDirichletAllocation</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_topics</span><span class="p">,</span> <span class="n">learning_method</span><span class="o">=</span><span class="s1">'online'</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">lda_topic_matrix</span> <span class="o">=</span> <span class="n">lda_model</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">small_document_term_matrix</span><span class="p">)</span>
+<span class="n">lda_model</span> <span class="o">=</span> <span class="n">LatentDirichletAllocation</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_topics</span><span class="p">,</span> <span class="n">learning_method</span><span class="o">=</span><span class="s1">'online'</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="c1"># Instatiate the LDA class</span>
+<span class="n">lda_topic_matrix</span> <span class="o">=</span> <span class="n">lda_model</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">small_document_term_matrix</span><span class="p">)</span> <span class="c1"># Runs the LDA process</span>
 </pre></div>
 </div>
 </div>
@@ -3665,6 +3665,8 @@ iIiIiJimFM8REREREdP0f67xEmn5So37AAAAAElFTkSuQmCC
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>Already, we see starkly different results from those generated by LSA. The topics that have been delineated are different...</p>
+<p>Moreover, the distribution of topics is much flatter. This is likely a consequence of the EM algorithm.</p>
 <p>However, in order to properly compare LDA with LSA, we again take this topic matrix and project it into two dimensions with $t$-SNE.</p>
 </div>
 </div>
@@ -3891,7 +3893,7 @@ iIiIiJimFM8REREREdP0f67xEmn5So37AAAAAElFTkSuQmCC
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>This is a much better result! Controlling for $t$-SNE, it would seem that LDA has had much more succcess than LSA in separating out the topic categories.</p>
+<p>This is a much better result! Controlling for $t$-SNE, it would seem that LDA has had much more succcess than LSA in separating out the topic categories. There is much less overlap between the topic clusters...</p>
 </div>
 </div>
 </div>
@@ -3899,674 +3901,7 @@ iIiIiJimFM8REREREdP0f67xEmn5So37AAAAAElFTkSuQmCC
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="An-Aside:-Scaling-Up">An Aside: Scaling Up<a class="anchor-link" href="#An-Aside:-Scaling-Up">¶</a></h3><p>Now that we have found an effective clustering algorithm, we can scale it up. We still have to work with a subsample, as it is infeasible to train an LDA model one million observations, but we can significantly increase our scope to $100,000$ headlines.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [55]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">big_sample_size</span> <span class="o">=</span> <span class="mi">100000</span> 
-
-<span class="n">big_count_vectorizer</span> <span class="o">=</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">stop_words</span><span class="o">=</span><span class="s1">'english'</span><span class="p">,</span> <span class="n">max_features</span><span class="o">=</span><span class="mi">40000</span><span class="p">)</span>
-<span class="n">big_text_sample</span> <span class="o">=</span> <span class="n">reindexed_data</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="n">big_sample_size</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">()</span>
-<span class="n">big_document_term_matrix</span> <span class="o">=</span> <span class="n">big_count_vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">big_text_sample</span><span class="p">)</span>
-
-<span class="n">big_lda_model</span> <span class="o">=</span> <span class="n">LatentDirichletAllocation</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_topics</span><span class="p">,</span> <span class="n">learning_method</span><span class="o">=</span><span class="s1">'online'</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">big_lda_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">big_document_term_matrix</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>iteration: 1 of max_iter: 10
-iteration: 2 of max_iter: 10
-iteration: 3 of max_iter: 10
-iteration: 4 of max_iter: 10
-iteration: 5 of max_iter: 10
-iteration: 6 of max_iter: 10
-iteration: 7 of max_iter: 10
-iteration: 8 of max_iter: 10
-iteration: 9 of max_iter: 10
-iteration: 10 of max_iter: 10
-</pre>
-</div>
-</div>
-<div class="output_area">
-<div class="prompt output_prompt">Out[55]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>LatentDirichletAllocation(batch_size=128, doc_topic_prior=None,
-             evaluate_every=-1, learning_decay=0.7,
-             learning_method='online', learning_offset=10.0,
-             max_doc_update_iter=100, max_iter=10, mean_change_tol=0.001,
-             n_components=8, n_jobs=1, n_topics=None, perp_tol=0.1,
-             random_state=None, topic_word_prior=None,
-             total_samples=1000000.0, verbose=1)</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>We thus have our big topic model. The next step is to pass the entire dataset of one million headlines through this model, and sort by years. This will allow us to develop a table of topic counts per year.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [56]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">yearly_data</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2003</span><span class="p">,</span><span class="mi">2017</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
-    <span class="n">yearly_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reindexed_data</span><span class="p">[</span><span class="s1">'{}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">())</span>
-
-<span class="n">yearly_topic_matrices</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="n">yearly_data</span><span class="p">:</span>
-    <span class="n">document_term_matrix</span> <span class="o">=</span> <span class="n">big_count_vectorizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">year</span><span class="p">)</span>
-    <span class="n">topic_matrix</span> <span class="o">=</span> <span class="n">big_lda_model</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">document_term_matrix</span><span class="p">)</span>
-    <span class="n">yearly_topic_matrices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">topic_matrix</span><span class="p">)</span>
-
-<span class="n">yearly_keys</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">topic_matrix</span> <span class="ow">in</span> <span class="n">yearly_topic_matrices</span><span class="p">:</span>
-    <span class="n">yearly_keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">get_keys</span><span class="p">(</span><span class="n">topic_matrix</span><span class="p">))</span>
-    
-<span class="n">yearly_counts</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">keys</span> <span class="ow">in</span> <span class="n">yearly_keys</span><span class="p">:</span>
-    <span class="n">categories</span><span class="p">,</span> <span class="n">counts</span> <span class="o">=</span> <span class="n">keys_to_counts</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span>
-    <span class="n">yearly_counts</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span>
-
-<span class="n">yearly_topic_counts</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">yearly_counts</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="mi">2003</span><span class="p">,</span><span class="mi">2017</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">yearly_topic_counts</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Topic {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_topics</span><span class="p">)]</span>
-
-<span class="k">print</span><span class="p">(</span><span class="n">yearly_topic_counts</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>      Topic 0  Topic 1  Topic 2  Topic 3  Topic 4  Topic 5  Topic 6  Topic 7
-2003     9276     7971     7349     8620     8578     8338     6570     7301
-2004     9978     9206     8177     9737     9558     9951     7734     8333
-2005     9362     9083     8267     9965     9315    10110     8125     8897
-2006     9132     8308     7852     8504     8756     8841     7696     7823
-2007    10271     9064     9120    10061     9852    10737     8657     9430
-2008    10549     9948     8955    10688    10117    10836     9139     9783
-2009     9357     8719     8895    10079     8633    10476     8694    11601
-2010     9133     8726     8928     9887     8527    10199     8319    11229
-2011     9600     8994     9771     9640     9270    10229     9114    11211
-2012    10215    10070    12232    11228    11032    11395    10406    12531
-2013    10408    10384    12473    11195    11807    11565    12042    12464
-2014    10275     9530    10783     9582    10515    10225    11294    10126
-2015     8862     8833    10781     9251     9763     9553    11957     8941
-2016     6105     6258     7698     7385     6460     6987     7137     6586
-2017     4125     3775     4275     4345     4292     3899     4601     4484
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>We now have a dataframe of the yearly counts of each of the $N$ topic categories. Once again, these topics can be characterised by their most frequent words, where we are now taking the most frequent words from across the whole dataset of one million headlines.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [57]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">complete_keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">year</span> <span class="ow">in</span> <span class="n">yearly_keys</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">year</span><span class="p">]</span>
-<span class="n">complete_topic_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">yearly_topic_matrices</span><span class="p">)</span>
-<span class="n">complete_document_term_matrix</span> <span class="o">=</span> <span class="n">big_count_vectorizer</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">reindexed_data</span><span class="o">.</span><span class="n">as_matrix</span><span class="p">())</span>
-
-<span class="n">top_n_words</span> <span class="o">=</span> <span class="n">get_top_n_words</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">complete_keys</span><span class="p">,</span> <span class="n">complete_document_term_matrix</span><span class="p">,</span> <span class="n">big_count_vectorizer</span><span class="p">)</span>
-
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">top_n_words</span><span class="p">)):</span>
-    <span class="k">print</span><span class="p">(</span><span class="s1">'Topic {}: '</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">top_n_words</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>('Topic 0: ', u'govt cup world win report final power pm deal test')
-('Topic 1: ', u'police home woman dies wins national iraq residents fight changes')
-('Topic 2: ', u'water abc calls election funding minister health business centre mp')
-('Topic 3: ', u'man says charged hospital killed market attack death police china')
-('Topic 4: ', u'nsw wa sa farmers child talks nt help plans drug')
-('Topic 5: ', u'police new crash coast sydney missing day search gold probe')
-('Topic 6: ', u'australian murder south rural trial school guilty open budget rise')
-('Topic 7: ', u'interview court council plan car face year group change man')
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Having contextualised the topic categories, we can then visualise their evolution across time through use of a heatmap.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [58]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span></span><span class="n">labels</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'Topic {}: </span><span class="se">\n</span><span class="s1"> '</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="s1">' '</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">topic</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">for</span> <span class="n">topic</span> <span class="ow">in</span> <span class="n">top_n_words</span><span class="p">][</span><span class="n">i</span><span class="p">][:</span><span class="mi">3</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_topics</span><span class="p">)]</span>
-
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span><span class="mi">10</span><span class="p">));</span>
-<span class="n">sb</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">yearly_topic_counts</span><span class="p">,</span> <span class="n">xticklabels</span><span class="o">=</span><span class="n">labels</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s2">"YlGnBu"</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[58]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre><matplotlib.axes._subplots.axessubplot at 0x1a19ce04d0></pre>
-</div>
-</div>
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_png output_subarea ">
-<img src="data:image/png;base64,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
-" />
-</div>
-</div>
+<h1 id="Conclusions">Conclusions<a class="anchor-link" href="#Conclusions">¶</a></h1><p>Each of the two algorithms has had varying degrees of success.</p>
 </div>
 </div>
 </div>
