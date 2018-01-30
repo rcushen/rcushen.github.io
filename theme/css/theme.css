@@ -42,7 +42,7 @@ hr {
 }
 
 .header img {
-  /* margin-bottom: 1rem; */
+  margin-bottom: 1rem;
   /* This is the spot where I changed some things... */
   display: block;
   margin-left: auto;
