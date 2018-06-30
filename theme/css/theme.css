@@ -43,10 +43,6 @@ hr {
 
 .header img {
   margin-bottom: 1rem;
-  /* This is the spot where I changed some things... */
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .header .title {
