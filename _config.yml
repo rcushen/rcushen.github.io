@@ -7,7 +7,7 @@
 title: Forest for the Tree
 email: cushenr[at]outlook.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Hi there! Welcome to my blog. This is about statistics and economics.
+  A statistics and economics blog.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: jekyllrb
