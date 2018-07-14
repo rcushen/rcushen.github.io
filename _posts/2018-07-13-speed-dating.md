@@ -1,11 +1,8 @@
 ---
-Title: Speed Dating and Revealed Preferences
-Slug: speed-dating-and-revealed-preferences
-Date: 2018-06-30 12:00
-Category: posts
-Tags: statistics, R, data analysis, classification
-Author: Ryan Cushen
-Summary: A discussion of revealed preferences and prediction using logistic regression.
+layout: post
+title:  "Speed Dating and Revealed Preferences"
+date:   2018-07-13 12:00 +1000
+categories: statistics R data classification
 ---
 
 *In this post, the classification technique of logistic regression is explored, alongside a discussion of revealed preferences. This is done using a dataset on speed dating, generated experimentally as part of a paper by two professors at Columbia University.*
@@ -65,7 +62,7 @@ We thus have a simple linear model for the probability of our response variable 
 $$
 \pi(x) = \frac{1}{1-\mathbb{e}^{-(\beta_0 + \beta^\intercal x)}} ,
 $$
-parameterised by the set $\theta = \{ \beta_0 ,  \beta \}$. 
+parameterised by the set $\theta = \{ \beta_0 ,  \beta \}$.
 
 *(As an interesting aside, the logistic curve is also used as a common model of population growth in biology)*
 
@@ -136,26 +133,26 @@ and we try to predict whether the individual wanted to match. Note that this onl
 
 ```R
 > model <- glm(wants_to_match ~ ., family = binomial(link = 'logit'), data = X_train)
-> 
+>
 > summary(model)
 
 Call:
-glm(formula = wants_to_match ~ ., family = binomial(link = "logit"), 
+glm(formula = wants_to_match ~ ., family = binomial(link = "logit"),
     data = X_train)
 
-Deviance Residuals: 
+Deviance Residuals:
     Min       1Q   Median       3Q      Max  
 -1.8425  -0.9520  -0.5513   1.0500   2.4881  
 
 Coefficients:
                        Estimate Std. Error z value Pr(>|z|)    
 (Intercept)           -5.609066   0.374861 -14.963  < 2e-16 ***
-i_Gender               0.171867   0.061003   2.817  0.00484 ** 
+i_Gender               0.171867   0.061003   2.817  0.00484 **
 order                 -0.003964   0.005019  -0.790  0.42962    
 init_corr              0.096448   0.090170   1.070  0.28479    
 samerace              -0.016753   0.056074  -0.299  0.76512    
 actual_Attractiveness  0.588320   0.035357  16.640  < 2e-16 ***
-actual_Sincerity      -0.193844   0.060349  -3.212  0.00132 ** 
+actual_Sincerity      -0.193844   0.060349  -3.212  0.00132 **
 actual_Intelligence    0.198286   0.078116   2.538  0.01114 *  
 actual_Fun             0.351416   0.043718   8.038 9.12e-16 ***
 actual_Ambition       -0.120263   0.057171  -2.104  0.03542 *  
@@ -184,7 +181,7 @@ Looking at the output, we see that all of the 'actuals' are significant to some 
 
 Using a threshold of $\lambda = 0.5$, we have therefore achieved an accuracy of 64% on a held-out test set. Good, but not great – clearly there is more to love than just 10 variables!
 
-Now let us incorporate stated preferences. Specifically, we incorporate a variable $d_i$ defined as the (scaled) difference between actual attributes and stated preferences. For example, if this is positive, then the partner is more attractive than the preference of the individual, while if it is negative, they are less attractive. 
+Now let us incorporate stated preferences. Specifically, we incorporate a variable $d_i$ defined as the (scaled) difference between actual attributes and stated preferences. For example, if this is positive, then the partner is more attractive than the preference of the individual, while if it is negative, they are less attractive.
 $$
 d_i = \frac{a_i - \overline{a}}{\hat{\sigma}_a} - \frac{s_i - \overline{s}}{\hat{\sigma}_s}
 $$
@@ -192,14 +189,14 @@ Here $a_i$ is the 'actual' value of the partner, demeaned and scaled to have uni
 
 ```R
 > model <- glm(wants_to_match ~ ., family = binomial(link = 'logit'), data = X_train)
-> 
+>
 > summary(model)
 
 Call:
-glm(formula = wants_to_match ~ ., family = binomial(link = "logit"), 
+glm(formula = wants_to_match ~ ., family = binomial(link = "logit"),
     data = X_train)
 
-Deviance Residuals: 
+Deviance Residuals:
     Min       1Q   Median       3Q      Max  
 -1.9251  -0.9819  -0.5941   1.0717   2.6485  
 
@@ -228,7 +225,7 @@ AIC: 7883.4
 Number of Fisher Scoring iterations: 3
 ```
 
-Immediately we see that several of the attribute varibles have become *more* significant. Given that the model is otherwise identical, this would suggest that incorporating stated preferences has improved our model. Moreover, all estimated coefficients are of an expected sign: our results suggest that across the dimensions of attractiveness, intelligence, fun and ambition, falling short of someone's stated preferences does indeed reduce your chance of matching with them. 
+Immediately we see that several of the attribute varibles have become *more* significant. Given that the model is otherwise identical, this would suggest that incorporating stated preferences has improved our model. Moreover, all estimated coefficients are of an expected sign: our results suggest that across the dimensions of attractiveness, intelligence, fun and ambition, falling short of someone's stated preferences does indeed reduce your chance of matching with them.
 
 Model accuracy has improved a fraction.
 

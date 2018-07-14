@@ -1,3 +1,10 @@
+---
+layout: post
+title:  "Topic Modelling with LSA and LDA"
+date:   2018-01-28 12:00 +1000
+categories: statistics R data classification
+---
+
 *In this post, two typical NLP techniques are explored in relation to the problem of topic modelling. These are applied to the 'A Million News Headlines' dataset, which is a corpus of over one million news article headlines published by the ABC.*
 
 # Introduction
@@ -38,7 +45,7 @@ $$
 \begin{bmatrix} \text{the cat in the hat} \\ \text{green eggs and ham} \\ \vdots \\ \text{horton hears a who} \end{bmatrix}
 \longrightarrow
 \underbrace{
-\begin{bmatrix} 
+\begin{bmatrix}
 1 & 0 & 2 & 0 & 0 & \cdots & 1 & 0 \\
 0 & 1 & 0 & 0 & 1 & \cdots & 0 & 1 \\
 \vdots & \vdots & \vdots & \vdots & \vdots & & \vdots & \vdots \\
@@ -55,7 +62,7 @@ D = U \Sigma V^T
 $$
 we therefore use
 $$
- T = U \hat{\Sigma} V^T 
+ T = U \hat{\Sigma} V^T
 $$
 where $\hat{\Sigma}$ is the matrix of singular values $\Sigma$ with all but the $r$ largest singular values set to zero. The resulting matrix $T$ is thus of reduced rank, and is referred to as the **topic matrix**. Each of its $n$ rows will represent a document, and each of the first $r$ columns will correspond to a topic; the $(i, j)$th entry can then be considered a measure of the presence of topic $j$ in document $i$. To actually sort a document into a topic category, we simply take the $\arg \max$ of each row, as this will correspond to the most strongly-represented topic. Note too that $r$ is a parameter here, and must be supplied as an input to the algorithm. In other words, the number of topic categories must be provided exogenously – not all of the decision are made internally by the algorithm.
 
@@ -82,12 +89,12 @@ Next we generate a histogram of headline word lengths, and use [part-of-speech t
 
 ```python
 > tagged_headlines = pd.DataFrame(
->   {'tags':[TextBlob(headlines_data[i]).pos_tags 
+>   {'tags':[TextBlob(headlines_data[i]).pos_tags
 >                            for i in range(headlines_data.shape[0])]})
-> 
-> word_counts = [] 
+>
+> word_counts = []
 > pos_counts = {}
-> 
+>
 > for headline in tagged_headlines['tags']:
 >     word_counts.append(len(headline))
 >     for tag in headline:
@@ -107,15 +114,15 @@ The only preprocessing step required in our case is feature construction, discus
 ```python
 > count_vectorizer = CountVectorizer(stop_words='english', max_features=40000)
 > text_sample = reindexed_data.sample(n=10000, random_state=0).as_matrix()
-> 
+>
 > print('Headline before vectorization: {}'.format(text_sample[0]))
-> 
+>
 > document_term_matrix = count_vectorizer.fit_transform(text_sample)
-> 
+>
 > print('Headline after vectorization: \n{}'.format(document_term_matrix[0]))
 
 Headline before vectorization:  barr on federal budget preview
-Headline after vectorization: 
+Headline after vectorization:
   (0, 8418)	1
   (0, 1743)	1
   (0, 4156)	1
@@ -136,7 +143,7 @@ Let's start by experimenting with LSA. This can be easily implemented using the 
 
 ```python
 > from sklearn.decomposition import TruncatedSVD
-> 
+>
 > lsa_model = TruncatedSVD(n_components=n_topics)
 > lsa_topic_matrix = lsa_model.fit_transform(document_term_matrix)
 ```
@@ -146,7 +153,7 @@ Taking the $\arg \max$ of each headline in this topic matrix will give the predi
 ```python
 > top_n_words_lsa = get_top_n_words(10, lsa_keys,
 >                                 document_term_matrix, count_vectorizer)
-> 
+>
 > for i in range(len(top_n_words_lsa)):
 > 	print("Topic {}: {}".format(i, top_n_words_lsa[i]))
 
@@ -170,9 +177,9 @@ However, this output does not provide a great point of comparison with other clu
 
 ```python
 > from sklearn.manifold import TSNE
-> 
-> tsne_lsa_model = TSNE(n_components=2, perplexity=50, 
->                      learning_rate=100, n_iter=2000, verbose=1, 
+>
+> tsne_lsa_model = TSNE(n_components=2, perplexity=50,
+>                      learning_rate=100, n_iter=2000, verbose=1,
 >                      random_state=0, angle=0.75)
 > tsne_lsa_vectors = tsne_lsa_model.fit_transform(lsa_topic_matrix)
 ```
@@ -189,8 +196,8 @@ We now repeat this process using LDA instead of LSA. Once again, SKLearn provide
 
 ```python
 > from sklearn.decomposition import LatentDirichletAllocation
-> 
-> lda_model = LatentDirichletAllocation(n_components=n_topics, 
+>
+> lda_model = LatentDirichletAllocation(n_components=n_topics,
 >                            learning_method='online', random_state=0, verbose=0)
 > lda_topic_matrix = lda_model.fit_transform(document_term_matrix)
 ```
@@ -200,7 +207,7 @@ Once again, we take the $\arg \max$ of each entry in the topic matrix to obtain 
 ```python
 > top_n_words_lda = get_top_n_words(10, lda_keys,
 >                                 document_term_matrix, count_vectorizer)
-> 
+>
 > for i in range(len(top_n_words_lda)):
 > 	print("Topic {}: {}".format(i, top_n_words_lda[i]))
 
@@ -224,9 +231,9 @@ Nonetheless, in order to properly compare LDA with LSA, we again take this topic
 
 ```python
 > from sklearn.manifold import TSNE
-> 
+>
 > tsne_lda_model = TSNE(n_components=2, perplexity=50,
->                     learning_rate=100, n_iter=2000, verbose=1, 
+>                     learning_rate=100, n_iter=2000, verbose=1,
 >                     random_state=0, angle=0.75)
 > tsne_lda_vectors = tsne_lda_model.fit_transform(lda_topic_matrix)
 ```
