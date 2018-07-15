@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Speed Dating and Revealed Preferences"
-date:   2018-07-13 12:00 +1000
+title: "Speed Dating and Revealed Preferences"
+date: 2018-07-13 12:00 +1000
 ---
 
 *In this post, the classification technique of logistic regression is explored, alongside a discussion of revealed preferences. This is done using a dataset on speed dating, generated experimentally as part of a paper by two professors at Columbia University.*
@@ -70,9 +70,6 @@ Since we no longer have a linear model, OLS cannot be used to estimate the param
 \mathcal{l} (\theta) = \sum_{i=1}^N \log (\pi_i (x_i ; \theta)) ,
 \\]
 where recall that \\(\pi_i(x_i ; \theta ) = \text{Pr}(G = 1| X = x_i ; \theta)\\). This is then solved numerically -- `R` uses iteratively reweighted least squares. The final result is a trained model \\(\hat{f}\\) that will predict the probability \\(\pi(x)\\) given an observation \\(x\\). Using a threshold value \\(\lambda\\), we can then use these probabilities to predict \\(G\\), the actual value of interest.
-\\[
-\hat{G} = \begin{cases}1 \ \text{if} \ \pi(x) \geq \lambda \\ 0 \ \text{if} \ \pi(x) < \lambda \end{cases}
-\\]
 
 # Analysis
 
@@ -181,10 +178,10 @@ Looking at the output, we see that all of the 'actuals' are significant to some 
 Using a threshold of $\lambda = 0.5$, we have therefore achieved an accuracy of 64% on a held-out test set. Good, but not great – clearly there is more to love than just 10 variables!
 
 Now let us incorporate stated preferences. Specifically, we incorporate a variable $d_i$ defined as the (scaled) difference between actual attributes and stated preferences. For example, if this is positive, then the partner is more attractive than the preference of the individual, while if it is negative, they are less attractive.
-$$
+\\[
 d_i = \frac{a_i - \overline{a}}{\hat{\sigma}_a} - \frac{s_i - \overline{s}}{\hat{\sigma}_s}
-$$
-Here $a_i$ is the 'actual' value of the partner, demeaned and scaled to have unit variance, and $s_i$ is the stated preference of the individual, also demeaned and scaled to have unit variance. As such, if the estimated parameter for $d$ is significant and positive (i.e. someone sitting below your preferences decreases your desire to match with them), then people tend to match with those that fit their preferences. If it is insignificant, then stated preferences do not influence one's desire to match.
+\\]
+Here \\(a_i\\) is the 'actual' value of the partner, demeaned and scaled to have unit variance, and \\(s_i\\) is the stated preference of the individual, also demeaned and scaled to have unit variance. As such, if the estimated parameter for \\(d\\) is significant and positive (i.e. someone sitting below your preferences decreases your desire to match with them), then people tend to match with those that fit their preferences. If it is insignificant, then stated preferences do not influence one's desire to match.
 
 ```R
 > model <- glm(wants_to_match ~ ., family = binomial(link = 'logit'), data = X_train)
