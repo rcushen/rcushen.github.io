@@ -45,34 +45,34 @@ Given that we will be making predictions as to the romantic inclinations of thes
 
 ## A Review of Logistic Regression
 
-The **logistic regression model** we shall be using is perhaps the simplest tool in the statisticians toolbox for tackling the problem of classification. In its simplest form, it offers a model $f$ for the conditional probability of a binary response variable $G \in \{0, 1 \}$, given some matrix of features $X$.
-$$
+The **logistic regression model** we shall be using is perhaps the simplest tool in the statisticians toolbox for tackling the problem of classification. In its simplest form, it offers a model \\(f\\) for the conditional probability of a binary response variable \\(G \in \{0, 1 \}\\), given some matrix of features \\(X\\).
+\\[
 G = f(X)
-$$
+\\]
 This model is derived by making two small adjustments to the standard linear regression model, familiarly given as
-$$
+\\[
 \mathbb{E}(G|X=x) = \beta_0 + \beta^\intercal x .
-$$
-Firstly, the expected value $\mathbb{E}(G|X=x)$ can now be called a probability. Let us denote this as $\text{Pr}(G =1|X = x ) = \pi$. The above equation can therefore be rewritten as
-$$
+\\]
+Firstly, the expected value \\(\mathbb{E}(G|X=x)\\) can now be called a probability. Let us denote this as \\(\text{Pr}(G =1|X = x ) = \pi\\). The above equation can therefore be rewritten as
+\\[
 \pi (x) = \beta_0 + \beta^\intercal x .
-$$
-We thus have a simple linear model for the probability of our response variable $G$. However, is this appropriate? If we were to simply estimate this model without any additional constraints, the predicted probabilities would not be bounded. In other words, we may end up with a predicted probability greater than one, or less than zero! To combat this, we apply the logistic transformation, $g(x) = ({1-\mathbb{e}^{-x}})^{-1}$, which bounds all predicted values between zero and one. The final logistic regression model is hence written as
-$$
+\\]
+We thus have a simple linear model for the probability of our response variable \\(G\\). However, is this appropriate? If we were to simply estimate this model without any additional constraints, the predicted probabilities would not be bounded. In other words, we may end up with a predicted probability greater than one, or less than zero! To combat this, we apply the logistic transformation, \\(g(x) = ({1-\mathbb{e}^{-x}})^{-1}\\), which bounds all predicted values between zero and one. The final logistic regression model is hence written as
+\\[
 \pi(x) = \frac{1}{1-\mathbb{e}^{-(\beta_0 + \beta^\intercal x)}} ,
-$$
-parameterised by the set $\theta = \{ \beta_0 ,  \beta \}$.
+\\]
+parameterised by the set \\(\theta = \{ \beta_0 ,  \beta \}\\).
 
 *(As an interesting aside, the logistic curve is also used as a common model of population growth in biology)*
 
-Since we no longer have a linear model, OLS cannot be used to estimate the parameter set $\theta$. Instead, maximum likelihood estimation is employed. The log-likelihood function for $N$ observations is here given by
-$$
+Since we no longer have a linear model, OLS cannot be used to estimate the parameter set \\(\theta\\). Instead, maximum likelihood estimation is employed. The log-likelihood function for \\(N\\) observations is here given by
+\\[
 \mathcal{l} (\theta) = \sum_{i=1}^N \log (\pi_i (x_i ; \theta)) ,
-$$
-where recall that $\pi_i(x_i ; \theta ) = \text{Pr}(G = 1| X = x_i ; \theta)$. This is then solved numerically -- `R` uses iteratively reweighted least squares. The final result is a trained model $\hat{f}$ that will predict the probability $\pi(x)$ given an observation $x$. Using a threshold value $\lambda$, we can then use these probabilities to predict $G$, the actual value of interest.
-$$
+\\]
+where recall that \\(\pi_i(x_i ; \theta ) = \text{Pr}(G = 1| X = x_i ; \theta)\\). This is then solved numerically -- `R` uses iteratively reweighted least squares. The final result is a trained model \\(\hat{f}\\) that will predict the probability \\(\pi(x)\\) given an observation \\(x\\). Using a threshold value \\(\lambda\\), we can then use these probabilities to predict \\(G\\), the actual value of interest.
+\\[
 \hat{G} = \begin{cases}1 \ \text{if} \ \pi(x) \geq \lambda \\ 0 \ \text{if} \ \pi(x) < \lambda \end{cases}
-$$
+\\]
 
 # Analysis
 
@@ -104,7 +104,7 @@ And how do these 'actual' values compare with self-assessments? In other words, 
 
 ![scores_comparisons](./output/scores_comparisons.png)
 
-The scatterplots above show average scores compared to self-assessments for each individual, alongside a black $45^\circ$ line (points have been jittered for legibility). If a dot is above the line, then the individual's average rating was higher than their own self-assesment; if is below, then their average rating was below. There are lots of dots below the line! Suprisingly, it is women who are particularly guilty of self-promotion – see the summary table below, which describes the proportion of men and women below the line across each dimension:
+The scatterplots above show average scores compared to self-assessments for each individual, alongside a black \\(45^\circ\\) line (points have been jittered for legibility). If a dot is above the line, then the individual's average rating was higher than their own self-assesment; if is below, then their average rating was below. There are lots of dots below the line! Suprisingly, it is women who are particularly guilty of self-promotion – see the summary table below, which describes the proportion of men and women below the line across each dimension:
 
 | Attribute               | Women           |Men           |
 | -------------- | --------- | --------- |
