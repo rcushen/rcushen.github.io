@@ -32,7 +32,6 @@ More typically, topic modelling is conducted upon longer-form text data – perh
 ### Feature Construction
 
 As with most forms of text analysis, the text data must first be preprocessed before it can be used as input to any algorithm (for the moment, we will disregard the publish date). In our case, this will mean converting each headline into a (very long) vector, where each entry corresponds to the number of occurences of a particular word. Effectively, this is equivalent to walking through the string with a dictionary in hand, adding a check next to each word in the dictionary as they appear. The resulting list of word counts then becomes the vector associated with that string.
-
 $$
 \text{''the cat in the hat''} \longrightarrow \begin{bmatrix} 1 \\ 0 \\ 2 \\ 0 \\ 0 \\ \vdots \\ 1 \\ 0 \end{bmatrix} \in \begin{bmatrix} \text{cat} \\ \text{fantastic} \\ \text{the} \\ \text{fox} \\ \text{machine} \\ \vdots \\ \text{in} \\ \text{chocolate} \end{bmatrix}
 $$
