@@ -2,7 +2,6 @@
 layout: post
 title:  "Speed Dating and Revealed Preferences"
 date:   2018-07-13 12:00 +1000
-categories: statistics R data classification
 ---
 
 *In this post, the classification technique of logistic regression is explored, alongside a discussion of revealed preferences. This is done using a dataset on speed dating, generated experimentally as part of a paper by two professors at Columbia University.*
@@ -42,7 +41,7 @@ The data we will be using was gathered by two business school professors from Co
 
 Given that we will be making predictions as to the romantic inclinations of these 551 individuals, it would be helpful to gain some kind of snapshot of their personalities. To this end, let's take a quick look at their interests. As part of the questionnaire, each individual was asked to rate their interests out of ten across a spectrum of activities: the average scores are given below, split out by gender.
 
-![interests_gender](./output/interests_bygender.png)
+![interests_gender](/output/interests_bygender.png){:class="img-responsive"}
 
 ## A Review of Logistic Regression
 
