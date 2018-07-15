@@ -2,7 +2,7 @@
 layout: post
 title:  "Topic Modelling with LSA and LDA"
 date:   2018-01-28 12:00 +1000
-categories: statistics R data classification
+categories: statistics R data clustering NLP
 ---
 
 *In this post, two typical NLP techniques are explored in relation to the problem of topic modelling. These are applied to the 'A Million News Headlines' dataset, which is a corpus of over one million news article headlines published by the ABC.*

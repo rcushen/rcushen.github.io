@@ -7,17 +7,17 @@ categories: statistics R data classification
 
 *In this post, the classification technique of logistic regression is explored, alongside a discussion of revealed preferences. This is done using a dataset on speed dating, generated experimentally as part of a paper by two professors at Columbia University.*
 
-# Speed Dating and Revealed Preferences
+# Introduction
 
 A topic near and dear to all single hearts (and some coupled) the world over: what does the opposite sex desire? In this post, we make an attempt to disentangle the deceit, duplicity and downright dishonesty that so fills the romantic realm, while also learning about the concept of revealed preferences and the logistic regression model.
 
-## Introduction
+## Some Background
 
 In recent years, classification models have become perhaps the most exciting application of modern statistical learning techniques. It is classification that underpins the most familiar of machine learning technologies, such as computer vision and voice recognition, many of which draw on highly complex models like neural networks and support vector machines. In these contexts, classification goes by the name of **supervised learning**, though the fundamental problem remains exactly the same: given input data, we want to use some kind of model to predict an output. It is this problem that we will be dipping our toes into today!
 
 Of course, one often underreported difficulty in developing classification models is the requirement of large quantities of labelled training data, which are rarely easy to come by. For example: companies like Uber and Google have racked up millions of kilometres and thousands of hours of driving in order to generate data to train their self-driving car systems. This does not come cheap! Fortunately the dataset we will be using to investigate speed dating has already been collected for us, and is composed of exactly the kind of closed-world experimental results that are ideal for developing a classification model. Moreover, we are looking at a straightforward yes or no response, so a perfect scene is set for the logistic regression tool we will be implementing.
 
-### The Dataset
+## The Dataset
 
 The data we will be using was gathered by two business school professors from Columbia University (Ray Fisman and Sheena Iyengar) as part of their paper, *Gender Differences in Mate Selection: Evidence From a Speed Dating Experiment*. It details the results of a series of speed dating encounters between men and women, as well as a questionnaire that each participant was asked to fill out regarding their own preferences and characteristics. To be succint: we have a sample of 8,378 speed dates across 551 individuals, split almost exactly by sex. These participants were drawn from students in graduate and professional schools at Columbia. Each encounter has 122 variables associated, providing details such as the age, race, and employment status of those involved (see [the paper itself]([http://faculty.chicagobooth.edu/emir.kamenica/documents/genderDifferences.pdf) for a more robust description of the speed dating process).
 
@@ -44,7 +44,7 @@ Given that we will be making predictions as to the romantic inclinations of thes
 
 ![interests_gender](./output/interests_bygender.png)
 
-### A Review of Logistic Regression
+## A Review of Logistic Regression
 
 The **logistic regression model** we shall be using is perhaps the simplest tool in the statisticians toolbox for tackling the problem of classification. In its simplest form, it offers a model $f$ for the conditional probability of a binary response variable $G \in \{0, 1 \}$, given some matrix of features $X$.
 $$
@@ -75,9 +75,9 @@ $$
 \hat{G} = \begin{cases}1 \ \text{if} \ \pi(x) \geq \lambda \\ 0 \ \text{if} \ \pi(x) < \lambda \end{cases}
 $$
 
-## Analysis
+# Analysis
 
-### Stated Preferences
+## Stated Preferences
 
 Perhaps the most obvious place to begin our analysis of speed-dating is by looking at what people *say* they want. This was recorded as part of the questionnaire, with individuals asked to assign 100 points across six dimensions: ambition, attractiveness, fun, intelligence, shared interests and sincerity. The results are pictured in the box plot below. Unsurpisingly, attractiveness and intelligence win the day – and moreover, attractiveness exhibits a large number of outliers, suggesting that for many individuals, being unattractive is an absolute dealbreaker. Tough crowd! Overall though, the distribution is reasonably flat, with fun and sincerity not too far behind. Surprisingly, the latter beat out ambition – perhaps these high powered Columbia students are romantics after all!
 
@@ -91,11 +91,11 @@ We can also look at what each gender *thinks* the other desires. And in fact, we
 
 ![preferences_opp_sex](./output/preferences_opp_sex.png)
 
-### Revealed Preferences
+## Revealed Preferences
 
 So this is what people say they want in a partner. However, do they actually follow through and match with people who fit this bill? Or did they just respond to the questionnaire with what they thought sounded good? Of course, this need not even be a conscious deception – just as likely, people don't actually *know* what they want. Self-reported survey results are notoriously noisy for exactly these reasons (see: pollsters predictions of the 2016 US presidential elections). To combat this problem, economists have formulated the idea of **revealed preferences**, which essentially asserts that we shouldn't trust what people *say*, but rather observe what they *do*. Talk is cheap! In the dating context, this means looking at the types of people that an individual actually wants to match with, rather than the types of people who match their stated preferences. And thanks to the contrived nature of the speed dating process, this is exactly the data we have available. If only the entire romantic world could be organised by economists!
 
-#### Some Harsh Truths
+### Some Harsh Truths
 
 To understand this idea of revealed preferences, we're going to need a 'true figure' for each individual's attributes. This can be calculated as the average rating that each individual receives across their ten potential partners – which as an aside, also gives us a glimpse into the differing ways men and women evaluate each other. The story here is that men have much more variability: across every dimension, the distribution of actual scores for men is broader.
 
@@ -117,7 +117,7 @@ The scatterplots above show average scores compared to self-assessments for each
 
 Of course, the equally (if not more) likely reason for this disparity is that men are harsher critics than women. But this is a topic for another day!
 
-#### Predicting Matches
+### Predicting Matches
 
 Having defined our variables (and deflated our egos), we can now form a model to test this idea of revealed preferences a little more rigourously. A proposition: if people know what they want in a partner, then—holding all else constant—we would expect them to match with people who fit their preferences profile. As such, pairings with a small distance between the preference set and true attributes would be more likely to end in a match, while those with a large distance would not. This implies that the distinction between stated and revealed preferences can be tested through the significance of this distance variable.
 
@@ -237,9 +237,7 @@ Model accuracy has improved a fraction.
 [1] 0.6486154
 ```
 
-
-
-## Conclusions
+# Conclusions
 
 So what is the conclusion from this dismal dating dilemma? Many would argue that economists should focus on revealed preferences over stated preferences -- in other words, they should analyse what people do, and avoid the temptation to theorise about *why* they do it. In this case, it would appear that we do know what we want – though of course, this makes sense, given that romance is something we probably spend a lot of time thinking about.
 
