@@ -32,9 +32,9 @@ More typically, topic modelling is conducted upon longer-form text data – perh
 ### Feature Construction
 
 As with most forms of text analysis, the text data must first be preprocessed before it can be used as input to any algorithm (for the moment, we will disregard the publish date). In our case, this will mean converting each headline into a (very long) vector, where each entry corresponds to the number of occurences of a particular word. Effectively, this is equivalent to walking through the string with a dictionary in hand, adding a check next to each word in the dictionary as they appear. The resulting list of word counts then becomes the vector associated with that string.
-\\[
+\\\[
 \text{''the cat in the hat''} \longrightarrow \begin{bmatrix} 1 \\ 0 \\ 2 \\ 0 \\ 0 \\ \vdots \\ 1 \\ 0 \end{bmatrix} \in \begin{bmatrix} \text{cat} \\ \text{fantastic} \\ \text{the} \\ \text{fox} \\ \text{machine} \\ \vdots \\ \text{in} \\ \text{chocolate} \end{bmatrix}
-\\]
+\\\]
 This approach is known as a **bag of words** representation, in that it reduces each text string to just a collection of word counts and disregards the actual ordering of words. Of course, encoding features in this way involves a loss of information, and a more sophisticated approach might attempt to recognise specific sequences of words – but for our initial implementation, this is an acceptable simplification.
 
 *It is worth noting that this process of vectorisation has several variations. Rather than the naive approach taken above, a common alternative is [term frequency–inverse document frequency](https://en.wikipedia.org/wiki/Tf–idf) or TFIDF. This computes the relative frequency of words in a document compared to the whole corpus, partially in attempt to counteract the greater significance that a longer document would have over a shorter one if raw counts were used. However, given that we are working with a corpus of text strings of relatively equal length—and moreover, strings which are all very short—the naive approach is perfectly reasonable.*
