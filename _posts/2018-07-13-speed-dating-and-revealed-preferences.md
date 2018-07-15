@@ -42,7 +42,7 @@ The data we will be using was gathered by two business school professors from Co
 
 Given that we will be making predictions as to the romantic inclinations of these 551 individuals, it would be helpful to gain some kind of snapshot of their personalities. To this end, let's take a quick look at their interests. As part of the questionnaire, each individual was asked to rate their interests out of ten across a spectrum of activities: the average scores are given below, split out by gender.
 
-![interests_gender](/output/interests_bygender.png){:class="img-responsive"}
+![interests_gender](/assets/interests_bygender.png){:class="img-responsive"}
 
 ## A Review of Logistic Regression
 
@@ -78,15 +78,15 @@ where recall that \\(\pi_i(x_i ; \theta ) = \text{Pr}(G = 1| X = x_i ; \theta)\\
 
 Perhaps the most obvious place to begin our analysis of speed-dating is by looking at what people *say* they want. This was recorded as part of the questionnaire, with individuals asked to assign 100 points across six dimensions: ambition, attractiveness, fun, intelligence, shared interests and sincerity. The results are pictured in the box plot below. Unsurpisingly, attractiveness and intelligence win the day – and moreover, attractiveness exhibits a large number of outliers, suggesting that for many individuals, being unattractive is an absolute dealbreaker. Tough crowd! Overall though, the distribution is reasonably flat, with fun and sincerity not too far behind. Surprisingly, the latter beat out ambition – perhaps these high powered Columbia students are romantics after all!
 
-![preferences_overall](./output/preferences_overall.png)
+![preferences_overall](./assets/preferences_overall.png)
 
 Looking at a more granular breakdown by gender, we see nothing too surprising. Many of our common stereotypes are confirmed: men claim to care significantly more than women about attractiveness, whereas  women claim to care more about ambition and intelligence. It is nonetheless heartening to note that both sexes place almost exactly the same value on fun!
 
-![preferences_bygender](./output/preferences_bygender.png)
+![preferences_bygender](./assets/preferences_bygender.png)
 
 We can also look at what each gender *thinks* the other desires. And in fact, we are broadly quite good at intuiting, with men and women both coming very close to estimating the true preferences articulated above. Both genders do however overestimate the value of attractiveness!
 
-![preferences_opp_sex](./output/preferences_opp_sex.png)
+![preferences_opp_sex](./assets/preferences_opp_sex.png)
 
 ## Revealed Preferences
 
@@ -96,11 +96,11 @@ So this is what people say they want in a partner. However, do they actually fol
 
 To understand this idea of revealed preferences, we're going to need a 'true figure' for each individual's attributes. This can be calculated as the average rating that each individual receives across their ten potential partners – which as an aside, also gives us a glimpse into the differing ways men and women evaluate each other. The story here is that men have much more variability: across every dimension, the distribution of actual scores for men is broader.
 
-![scores_distributions_actual](./output/scores_distributions_actual.png)
+![scores_distributions_actual](./assets/scores_distributions_actual.png)
 
 And how do these 'actual' values compare with self-assessments? In other words, how accurately do people evaluate their own value? As we will see, everyone is a bit of an egotist – we all dramatically overestimate ourselves!
 
-![scores_comparisons](./output/scores_comparisons.png)
+![scores_comparisons](./assets/scores_comparisons.png)
 
 The scatterplots above show average scores compared to self-assessments for each individual, alongside a black \\(45^\circ\\) line (points have been jittered for legibility). If a dot is above the line, then the individual's average rating was higher than their own self-assesment; if is below, then their average rating was below. There are lots of dots below the line! Suprisingly, it is women who are particularly guilty of self-promotion – see the summary table below, which describes the proportion of men and women below the line across each dimension:
 
