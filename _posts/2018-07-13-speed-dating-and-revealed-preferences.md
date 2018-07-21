@@ -13,13 +13,13 @@ A topic near and dear to all single hearts (and some coupled) the world over: wh
 
 ## Some Background
 
-In recent years, classification models have become perhaps the most exciting application of modern statistical learning techniques. It is classification that underpins the most familiar of machine learning technologies, such as computer vision and voice recognition, many of which draw on highly complex models like neural networks and support vector machines. In these contexts, classification goes by the name of **supervised learning**, though the fundamental problem remains exactly the same: given input data, we want to use some kind of model to predict an output. It is this problem that we will be dipping our toes into today!
+In recent years, classification models have become perhaps the most exciting application of modern statistical learning techniques. It is classification that underpins the most familiar of machine learning technologies (eg. computer vision and voice recognition), many of which draw on highly complex models like neural networks and support vector machines. In these contexts, classification goes by the name of **supervised learning**, though the fundamental problem remains exactly the same: given input data, we want to use some kind of model to predict an output. It is this problem that we will be dipping our toes into today!
 
 Of course, one often underreported difficulty in developing classification models is the requirement of large quantities of labelled training data, which are rarely easy to come by. For example: companies like Uber and Google have racked up millions of kilometres and thousands of hours of driving in order to generate data to train their self-driving car systems. This does not come cheap! Fortunately the dataset we will be using to investigate speed dating has already been collected for us, and is composed of exactly the kind of closed-world experimental results that are ideal for developing a classification model. Moreover, we are looking at a straightforward yes or no response, so a perfect scene is set for the logistic regression tool we will be implementing.
 
 ## The Dataset
 
-The data we will be using was gathered by two business school professors from Columbia University (Ray Fisman and Sheena Iyengar) as part of their paper, *Gender Differences in Mate Selection: Evidence From a Speed Dating Experiment*. It details the results of a series of speed dating encounters between men and women, as well as a questionnaire that each participant was asked to fill out regarding their own preferences and characteristics. To be succint: we have a sample of 8,378 speed dates across 551 individuals, split almost exactly by sex. These participants were drawn from students in graduate and professional schools at Columbia. Each encounter has 122 variables associated, providing details such as the age, race, and employment status of those involved (see [the paper itself]([http://faculty.chicagobooth.edu/emir.kamenica/documents/genderDifferences.pdf) for a more robust description of the speed dating process).
+The data we will be using was gathered by two business school professors from Columbia University (Ray Fisman and Sheena Iyengar) as part of their paper, *Gender Differences in Mate Selection: Evidence From a Speed Dating Experiment*. It details the results of a series of speed dating encounters between men and women, as well as a questionnaire that each participant was asked to fill out regarding their own preferences and characteristics. To be succinct: we have a sample of 8,378 speed dates across 551 individuals, split almost exactly by sex. These participants were drawn from students in graduate and professional schools at Columbia. Each encounter has 122 variables associated, providing details such as the age, race, and employment status of those involved (see [the paper itself]([http://faculty.chicagobooth.edu/emir.kamenica/documents/genderDifferences.pdf) for a more robust description of the speed dating process).
 
 ```R
 > raw_data
@@ -40,7 +40,7 @@ The data we will be using was gathered by two business school professors from Co
 #   init_corr <dbl>, samerace <int>, age_o <int>, race_o <int>, pf_o_att <dbl>, ...
 ```
 
-Given that we will be making predictions as to the romantic inclinations of these 551 individuals, it would be helpful to gain some kind of snapshot of their personalities. To this end, let's take a quick look at their interests. As part of the questionnaire, each individual was asked to rate their interests out of ten across a spectrum of activities: the average scores are given below, split out by gender.
+Given that we will be making predictions as to the romantic inclinations of these 551 individuals, it would be helpful to gain some kind of snapshot of their personalities. To this end, let's take a quick look at their interests. As part of the questionnaire, each individual was asked to rate their interests out of ten across a spectrum of activities - the average scores are given below, split out by gender.
 
 ![interests_gender](/assets/interests_bygender.png){:class="img-responsive"}
 
@@ -70,21 +70,21 @@ Since we no longer have a linear model, OLS cannot be used to estimate the param
 \\[
 \mathcal{l} (\theta) = \sum_{i=1}^N \log (\pi_i (x_i ; \theta)) ,
 \\]
-where recall that \\(\pi_i(x_i ; \theta ) = \text{Pr}(G = 1| X = x_i ; \theta)\\). This is then solved numerically -- `R` uses iteratively reweighted least squares. The final result is a trained model \\(\hat{f}\\) that will predict the probability \\(\pi(x)\\) given an observation \\(x\\). Using a threshold value \\(\lambda\\), we can then use these probabilities to predict \\(G\\), the actual value of interest.
+where recall that \\(\pi_i(x_i ; \theta ) = \text{Pr}(G = 1| X = x_i ; \theta)\\). This is then solved numerically -- `R` uses iteratively reweighted least squares. The final result is a trained model \\(f\\) that will predict the probability \\(\pi(x)\\) given a particular observation \\(x\\). Using a threshold value \\(\lambda\\), we can then use these probabilities to predict \\(G\\), the actual value of interest.
 
 # Analysis
 
 ## Stated Preferences
 
-Perhaps the most obvious place to begin our analysis of speed-dating is by looking at what people *say* they want. This was recorded as part of the questionnaire, with individuals asked to assign 100 points across six dimensions: ambition, attractiveness, fun, intelligence, shared interests and sincerity. The results are pictured in the box plot below. Unsurpisingly, attractiveness and intelligence win the day – and moreover, attractiveness exhibits a large number of outliers, suggesting that for many individuals, being unattractive is an absolute dealbreaker. Tough crowd! Overall though, the distribution is reasonably flat, with fun and sincerity not too far behind. Surprisingly, the latter beat out ambition – perhaps these high powered Columbia students are romantics after all!
+Perhaps the most obvious place to begin our analysis of speed-dating is by looking at what people *say* they want. This was recorded as part of the questionnaire, with individuals asked to assign 100 points across six dimensions: Ambition, Attractiveness, Fun, Intelligence, Shared Interests and Sincerity. The results are pictured in the box plot below. Unsurprisingly, Attractiveness and Intelligence win the day – and moreover, Attractiveness exhibits a large number of positive outliers, suggesting that for many individuals, being unattractive is an absolute dealbreaker. Tough crowd! Overall though, the distribution is reasonably flat, with Fun and Sincerity not too far behind. Surprisingly, the latter beat out Ambition – perhaps these high powered Columbia students are romantics after all!
 
 ![preferences_overall](/assets/preferences_overall.png){:class="img-responsive"}
 
-Looking at a more granular breakdown by gender, we see nothing too surprising. Many of our common stereotypes are confirmed: men claim to care significantly more than women about attractiveness, whereas  women claim to care more about ambition and intelligence. It is nonetheless heartening to note that both sexes place almost exactly the same value on fun!
+Looking at a more granular breakdown by gender, we see nothing too surprising. Many of our common stereotypes are confirmed: men claim to care significantly more than women about Attractiveness, whereas  women claim to care more about Ambition and Intelligence. It is nonetheless heartening to note that both sexes place almost exactly the same value on Fun!
 
 ![preferences_bygender](/assets/preferences_bygender.png){:class="img-responsive"}
 
-We can also look at what each gender *thinks* the other desires. And in fact, we are broadly quite good at intuiting, with men and women both coming very close to estimating the true preferences articulated above. Both genders do however overestimate the value of attractiveness!
+We can also look at what each gender *thinks* the other desires. And in fact, we are broadly quite good at intuiting, with men and women both coming very close to estimating the true preferences articulated above. Both genders do however overestimate the value of Attractiveness!
 
 ![preferences_opp_sex](/assets/preferences_opp_sex.png){:class="img-responsive"}
 
@@ -102,7 +102,7 @@ And how do these 'actual' values compare with self-assessments? In other words, 
 
 ![scores_comparisons](/assets/scores_comparisons.png){:class="img-responsive"}
 
-The scatterplots above show average scores compared to self-assessments for each individual, alongside a black \\(45^\circ\\) line (points have been jittered for legibility). If a dot is above the line, then the individual's average rating was higher than their own self-assesment; if is below, then their average rating was below. There are lots of dots below the line! Suprisingly, it is women who are particularly guilty of self-promotion – see the summary table below, which describes the proportion of men and women below the line across each dimension:
+The scatterplots above show average scores compared to self-assessments for each individual, alongside a black \\(45^\circ\\) line (points have been jittered for legibility). If a dot is above the line, then the individual's average rating was higher than their own self-assessment; if is below, then their average rating was below. There are lots of dots below the line! Surprisingly, it is women who are particularly guilty of self-promotion – see the summary table below, which describes the proportion of men and women below the line across each dimension:
 
 | Attribute               | Women           |Men           |
 | -------------- | --------- | --------- |
@@ -116,7 +116,7 @@ Of course, the equally (if not more) likely reason for this disparity is that me
 
 ### Predicting Matches
 
-Having defined our variables (and deflated our egos), we can now form a model to test this idea of revealed preferences a little more rigourously. A proposition: if people know what they want in a partner, then—holding all else constant—we would expect them to match with people who fit their preferences profile. As such, pairings with a small distance between the preference set and true attributes would be more likely to end in a match, while those with a large distance would not. This implies that the distinction between stated and revealed preferences can be tested through the significance of this distance variable.
+Having defined our variables (and deflated our egos), we can now form a model to test this idea of revealed preferences a little more rigourously. A proposition: if people know what they want in a partner, then—holding all else constant—we would expect them to match with people who fit their preferences profile. As such, pairings with a small distance between the preference set and true attributes would be more likely to end in a match, while those with a large distance would not. This implies that the distinction between stated and revealed preferences can be tested through the significance of this distance variable...
 
 Let's start with a simple model, for a baseline. We take the following independent variables:
 * Gender
@@ -167,7 +167,7 @@ AIC: 7766.4
 Number of Fisher Scoring iterations: 3
 ```
 
-Looking at the output, we see that all of the 'actuals' are significant to some degree, as would be expected. Attractiveness and Fun are the most important – and notably, sincerity has a negative effect upon desire to match! None of pairing order, initial correlation of interests, whether or not the individuals are of the same race, and age difference are significant, suggesting that they do not have an effect upon the desire to match with a partner. Gender is nonetheless significant; since it is men who were encoded as 1, we deduce that men are more likely to want to match with any given partner than women. Again, a confirmation of stereotypes. What of the accuracy of the model?
+Looking at the output, we see that all of the 'actuals' are significant to some degree, as would be expected. Attractiveness and Fun are the most important – and notably, Sincerity and Ambition both have a negative effect upon desire to match! None of pairing order, initial correlation of interests, whether or not the individuals are of the same race, and age difference are significant, suggesting that they do not have an effect upon the desire to match with a partner. Gender is nonetheless significant; since it is men who were encoded as 1, we deduce that men are more likely to want to match with any given partner than women. Again, a confirmation of stereotypes. What of the accuracy of the model?
 
 ```R
 > results <- predict(model, newdata = X_test)
@@ -224,7 +224,7 @@ AIC: 7883.4
 Number of Fisher Scoring iterations: 3
 ```
 
-Immediately we see that several of the attribute varibles have become *more* significant. Given that the model is otherwise identical, this would suggest that incorporating stated preferences has improved our model. Moreover, all estimated coefficients are of an expected sign: our results suggest that across the dimensions of attractiveness, intelligence, fun and ambition, falling short of someone's stated preferences does indeed reduce your chance of matching with them.
+Immediately we see that several of the attribute variables have become *more* significant. Given that the model is otherwise identical, this would suggest that incorporating stated preferences has improved our model. Moreover, all estimated coefficients are of an expected sign: our results suggest that across the dimensions of attractiveness, intelligence, fun and ambition, falling short of someone's stated preferences does indeed reduce your chance of matching with them.
 
 Model accuracy has improved a fraction.
 
@@ -238,8 +238,11 @@ Model accuracy has improved a fraction.
 
 # Conclusions
 
+To be written...
+
+<!--
 So what is the conclusion from this dismal dating dilemma? Many would argue that economists should focus on revealed preferences over stated preferences -- in other words, they should analyse what people do, and avoid the temptation to theorise about *why* they do it. In this case, it would appear that we do know what we want – though of course, this makes sense, given that romance is something we probably spend a lot of time thinking about.
 
-
-
 But this gives hope to the rest of us mortals! No one knows what they want -- at least, no one wants what they think they want.
+
+-->
