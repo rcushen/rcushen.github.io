@@ -129,7 +129,8 @@ Let's start with a simple model, for a baseline. We take the following independe
 and we try to predict whether the individual wanted to match. Note that this only draws on the actual qualities of the partner, and not the stated preferences of the individual. Nonetheless, we would expect a reasonably significant model, with match probability likely increasing in actual attributes. The more attractive a partner is, the more likely it is that you would want to match with them – regardless of your preferences!
 
 ```R
-> model <- glm(wants_to_match ~ ., family = binomial(link = 'logit'), data = X_train)
+> model <- glm(wants_to_match ~ ., family = binomial(link = 'logit'),
+               data = X_train)
 >
 > summary(model)
 
@@ -176,16 +177,17 @@ Looking at the output, we see that all of the 'actuals' are significant to some 
 [1] 0.6388719
 ```
 
-Using a threshold of $\lambda = 0.5$, we have therefore achieved an accuracy of 64% on a held-out test set. Good, but not great – clearly there is more to love than just 10 variables!
+Using a threshold of \\(\lambda = 0.5\\), we have therefore achieved an accuracy of 64% on a held-out test set. Good, but not great – clearly there is more to love than just 10 variables!
 
-Now let us incorporate stated preferences. Specifically, we incorporate a variable $d_i$ defined as the (scaled) difference between actual attributes and stated preferences. For example, if this is positive, then the partner is more attractive than the preference of the individual, while if it is negative, they are less attractive.
+Now let us incorporate stated preferences. Specifically, we incorporate a variable \\(d_i\\) defined as the (scaled) difference between actual attributes and stated preferences. For example, if this is positive, then the partner is more attractive than the preference of the individual, while if it is negative, they are less attractive.
 \\[
 d_i = \frac{a_i - \overline{a}}{\hat{\sigma}_a} - \frac{s_i - \overline{s}}{\hat{\sigma}_s}
 \\]
 Here \\(a_i\\) is the 'actual' value of the partner, demeaned and scaled to have unit variance, and \\(s_i\\) is the stated preference of the individual, also demeaned and scaled to have unit variance. As such, if the estimated parameter for \\(d\\) is significant and positive (i.e. someone sitting below your preferences decreases your desire to match with them), then people tend to match with those that fit their preferences. If it is insignificant, then stated preferences do not influence one's desire to match.
 
 ```R
-> model <- glm(wants_to_match ~ ., family = binomial(link = 'logit'), data = X_train)
+> model <- glm(wants_to_match ~ ., family = binomial(link = 'logit'),
+               data = X_train)
 >
 > summary(model)
 
