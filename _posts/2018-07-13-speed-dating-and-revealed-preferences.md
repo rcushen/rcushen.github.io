@@ -224,9 +224,9 @@ AIC: 7883.4
 Number of Fisher Scoring iterations: 3
 ```
 
-Immediately we see that several of the attribute variables have become *more* significant. Given that the model is otherwise identical, this would suggest that incorporating stated preferences has improved our model. Moreover, all estimated coefficients are of an expected sign: our results suggest that across the dimensions of attractiveness, intelligence, fun and ambition, falling short of someone's stated preferences does indeed reduce your chance of matching with them.
+Immediately we see that several of the attribute variables have become *more* significant. Given that the model is otherwise identical, this would suggest that incorporating stated preferences has improved our model. Moreover, all estimated coefficients are of an expected sign: our results suggest that across the dimensions of Attractiveness, Intelligence, Fun and Ambition, falling short of someone's stated preferences does indeed reduce your chance of matching with them.
 
-Model accuracy has improved a fraction.
+Model accuracy has also improved a fraction.
 
 ```R
 > results <- predict(model, newdata = X_test)
@@ -236,13 +236,12 @@ Model accuracy has improved a fraction.
 [1] 0.6486154
 ```
 
+It goes without saying that the takeaway here is *not* our ability to predict matches, but rather an understanding of those variables which significantly influence the matching process.
+
 # Conclusions
 
-To be written...
+So what is the conclusion from this dismal dating dilemma? Based on our model, it would appear that people do indeed generally match with the kinds of partners they claim to prefer. When a partner was not up to scratch, individuals were regularly less likely to want to match – especially across the dimensions of Fun and Attractiveness. Of course, this broadly makes sense, given that romance is probably the realm where we are most certain of our preferences. But nonetheless, unexpected attractions certainly did take place. While 65% of speed dates were correctly predicted, 35% were not; evidently romance cannot be solved by some survey questions!
 
-<!--
-So what is the conclusion from this dismal dating dilemma? Many would argue that economists should focus on revealed preferences over stated preferences -- in other words, they should analyse what people do, and avoid the temptation to theorise about *why* they do it. In this case, it would appear that we do know what we want – though of course, this makes sense, given that romance is something we probably spend a lot of time thinking about.
+More generally however, there is always value in investigating potential discrepancies between what people say and what they actually do (even when the results meet our expectations!). This is a common role for the public economist: given a policy proposal, he or she may be employed to evaluate whether the intended outcome will in fact be brought about. In other words, whether stated preferences can be relied upon, or if revealed preferences may completely nullify the intended policy objective. As an example, we might consider whether the reduction of a corporate tax rate will in fact increase investment (as may be claimed by industry representatives), or will instead simply bolster the wealth of shareholders. Alternatively, we might question whether government benefits for families indeed encourage couples to have children, or if they rather distort incentives in some other unforeseen fashion. All such questions ultimately require exactly the kind of interrogation of revealed preferences conducted above!
 
-But this gives hope to the rest of us mortals! No one knows what they want -- at least, no one wants what they think they want.
-
--->
+So where does that leave us mortals in the romantic realm? Ignoring for a moment that economists are perhaps the last people you should consult for dating advice, the data above would suggest one small takeaway: know your audience. Individuals are generally inclined to match with those that fit their own preference set, so the best strategy would seem to be knowing your assets and finding a demographic in which they are valued. And they say statistics isn't sexy...
