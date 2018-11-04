@@ -42,7 +42,7 @@ The data we will be using was gathered by two business school professors from Co
 
 Given that we will be making predictions as to the romantic inclinations of these 551 individuals, it would be helpful to gain some kind of snapshot of their personalities. To this end, let's take a quick look at their interests. As part of the questionnaire, each individual was asked to rate their interests out of ten across a spectrum of activities - the average scores are given below, split out by gender.
 
-![interests_gender](/assets/interests_bygender.png){:class="img-responsive"}
+![interests_gender](/assets/interests_bygender.png){:class="img-responsive", border:0}
 
 ## A Review of Logistic Regression
 
