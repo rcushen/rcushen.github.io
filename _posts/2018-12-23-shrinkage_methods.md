@@ -67,7 +67,7 @@ So this is our goal: to accurately estimate the parameter \$1.553 per kilometer.
 
 ### Exploratory Visualisations
 
-Before building a model, let's appraise the variables available to us in ```taxi_data```. A histogram of the fares variable shows a reasonable distribution, which is encouraging for modelling purposes as it suggests the conditional mean \\(\mathbb{E} [ y | x]\\) is likely to be well-defined. Most fares look to be under \$20, with a positive skew indicating the presence of a few larger outliers.
+Before building a model, let's appraise the variables available to us in ```taxi_data```. A histogram of the fares variable shows a reasonable distribution, which is encouraging for modelling purposes as it suggests the conditional mean \\(\mathbb{E} [ y \| x ] \\) is likely to be well-defined. Most fares look to be under \$20, with a positive skew indicating the presence of a few larger outliers.
 
 ![fares_distribution](/assets/fares_distribution.png){:class="img-responsive" border=0}
 
