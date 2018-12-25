@@ -14,4 +14,4 @@ Hi! My name is Ryan Cushen, and I'm a recent economics graduate from The Univers
 * Analysis of interesting datasets
 * Explorations of current-affairs economics issues
 
-Most of the computational heavy-lifting in each post is done in Jupyter Notebooks, using either Python or R. I do my best to include relevant code snippets, though more succinct script files for each post will be available on my Github. All questions and comments are very welcome!
+Most of the computational heavy-lifting in each post is using either Python or R. I do my best to include relevant code snippets, though more complete script files for each post will be available on my Github. All questions and comments are very welcome!
