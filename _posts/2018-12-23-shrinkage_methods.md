@@ -3,9 +3,10 @@ layout: post
 title: "A Survey of Shrinkage Methods"
 date: 2018-12-23 12:00 +1000
 categories: statistics
+excerpt: I examine some of the common shrinkage methods employed to combat the problem of overfitting. Specifically, the LASSO, ridge regression, and the elastic-net are detailed. The techniques are motivated by common issues that arise in the estimation of a known real-world parameter.
 ---
 
-*In this post, I explore some of the common shrinkage methods employed to combat the problem of overfitting. Specifically, the LASSO, ridge regression, and the elastic-net are detailed. The techniques are motivated by common issues that arise in the estimation of a known real-world parameter.*
+*In this post, I examine some of the common shrinkage methods employed to combat the problem of overfitting. Specifically, the LASSO, ridge regression, and the elastic-net are detailed. The techniques are motivated by common issues that arise in the estimation of a known real-world parameter.*
 
 # A Survey of Shrinkage Methods
 

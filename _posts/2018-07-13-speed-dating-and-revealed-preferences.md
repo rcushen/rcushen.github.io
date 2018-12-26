@@ -3,9 +3,10 @@ layout: post
 title: "Speed Dating and Revealed Preferences"
 date: 2018-07-13 12:00 +1000
 categories: economics
+excerpt: The classification technique of logistic regression is introduced, alongside a discussion of revealed preferences. This is done using a dataset on speed dating, generated experimentally as part of a paper by two professors at Columbia University.
 ---
 
-*In this post, the classification technique of logistic regression is explored, alongside a discussion of revealed preferences. This is done using a dataset on speed dating, generated experimentally as part of a paper by two professors at Columbia University.*
+*In this post, the classification technique of logistic regression is introduced, alongside a discussion of revealed preferences. This is done using a dataset on speed dating, generated experimentally as part of a paper by two professors at Columbia University.*
 
 # Introduction
 
