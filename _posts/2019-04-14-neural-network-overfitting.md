@@ -8,7 +8,7 @@ excerpt: A brief illustration of the problem of overfitting in neural network cl
 
 # Overfitting in Neural Network Classification
 
-This notebook provides a brief illustration of the problem of overfitting in neural network classification, showing that 'dense-er is not always better'. Specifically, we will be using the *Human Activity Recognition* dataset, composed of smartphone accelerometer readings of individuals performing one of six distinct activities.
+This post provides a brief illustration of the problem of overfitting in neural network classification, showing that 'dense-er is not always better'. Specifically, we will be using the *Human Activity Recognition* dataset, composed of smartphone accelerometer readings of individuals performing one of six distinct activities.
 
 ## Data Exploration
 
