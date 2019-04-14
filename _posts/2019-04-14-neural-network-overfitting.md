@@ -17,7 +17,7 @@ Inspecting the data reveals that 561 continuous-valued predictors are available,
 ```python
 > train_data.info()
 
-<class 'pandas.core.frame.DataFrame'>
+<class pandas.core.frame.DataFrame>
 RangeIndex: 7352 entries, 0 to 7351
 Columns: 563 entries, tBodyAcc-mean()-X to Activity
 dtypes: float64(561), int64(1), object(1)
@@ -72,10 +72,12 @@ This t-SNE transformation suggests that some points should be simple to classify
 We now build a neural network clasification model, using varying architectures.
 
 ```python
-train_dataset = TensorDataset(torch.from_numpy(X_train), torch.from_numpy(y_train))
+train_dataset = TensorDataset(torch.from_numpy(X_train), 
+                              	torch.from_numpy(y_train))
 train_dataloader = DataLoader(train_dataset, batch_size=32, shuffle=True)
 
-test_dataset = TensorDataset(torch.from_numpy(X_test), torch.from_numpy(y_test))
+test_dataset = TensorDataset(torch.from_numpy(X_test), 
+                             		torch.from_numpy(y_test))
 test_dataloader = DataLoader(test_dataset, batch_size=32, shuffle=True)
 ```
 
