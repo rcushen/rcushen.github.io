@@ -10,7 +10,7 @@ excerpt: A brief illustration of the problem of overfitting in neural network cl
 
 This notebook provides a brief illustration of the problem of overfitting in neural network classification, showing that 'dense-er is not always better'. Specifically, we will be using the *Human Activity Recognition* dataset, composed of smartphone accelerometer readings of individuals performing one of six distinct activities.
 
-### Data Exploration
+## Data Exploration
 
 Inspecting the data reveals that 561 continuous-valued predictors are available, as well as an ID variable describing the particular individual performing the activity. This latter variable will be omitted, as we are more interested in generalised activity recognition. Conveniently, all of the remaining predictors have already been scaled to lie between −1 and 1.
 
@@ -38,7 +38,7 @@ Importantly, the classes are uniformly distributed throughout the data. This wil
 
 ![activity_classes](/assets/activity_classes.png){:class="img-responsive" border=0}
 
-### Data Preprocessing
+## Data Preprocessing
 
 Before we can train a model, some elementary coding of the response variable is required.
 
@@ -56,7 +56,7 @@ PCA reveals that the first 100 principal components explain 97% of the variance 
 
 ![activity_PCA](/assets/activity_PCA.png){:class="img-responsive" border=0}
 
-Before proceeding, let's experiment with a \(t\)-SNE embedding.
+Before proceeding, let's experiment with a t-SNE embedding.
 
 ```python
 tsne = TSNE()
@@ -65,9 +65,9 @@ X_reduced = tsne.fit_transform(X_train)
 
 ![activity_tsne](/assets/activity_tsne.png){:class="img-responsive" border=0}
 
-This \(t\)-SNE transformation suggests that some points should be simple to classify, while others are almost indistinguishable from similar activities. We should not be surprised: sitting and standing are likely to generate almost identical accelerometer readings. Nevertheless, let's see how modelling fares.
+This t-SNE transformation suggests that some points should be simple to classify, while others are almost indistinguishable from similar activities. We should not be surprised: sitting and standing are likely to generate almost identical accelerometer readings. Nevertheless, let's see how modelling fares.
 
-### Neural Network Models
+## Neural Network Models
 
 We now build a neural network clasification model, using varying architectures.
 
@@ -150,9 +150,13 @@ Now we can instantiate a set of models to experiment with.
 Net 1: 3 layers - [561, 250, 6]
 Net 2: 5 layers - [561, 124, 32, 16, 6]
 Net 3: 8 layers - [561, 256, 256, 124, 64, 32, 16, 6]
-Net 4: 12 layers - [561, 289, 366, 228, 147, 69, 97, 106, 122, 156, 151, 6]
-Net 5: 15 layers - [561, 289, 366, 228, 147, 69, 97, 106, 122, 156, 151, 153, 202, 197, 6]
-Net 6: 20 layers - [561, 289, 366, 228, 147, 69, 97, 106, 122, 156, 151, 153, 202, 197, 214, 123, 42, 37, 41, 6]
+Net 4: 12 layers - [561, 289, 366, 228, 147, 69, 
+                    97, 106, 122, 156, 151, 6]
+Net 5: 15 layers - [561, 289, 366, 228, 147, 69, 
+                    97, 106, 122, 156, 151, 153, 202, 197, 6]
+Net 6: 20 layers - [561, 289, 366, 228, 147, 69, 
+                    97, 106, 122, 156, 151, 153, 202, 197, 
+                    214, 123, 42, 37, 41, 6]
 ```
 
 Having done so, we then run the training loop, updating the entire set of models concurrently.
@@ -162,7 +166,8 @@ for net in nets:
     net.to(device)
 
 criterion = nn.CrossEntropyLoss()
-optimizers = [optim.SGD(net.parameters(), lr=0.003, momentum=0.9) for net in nets]
+optimizers = [optim.SGD(net.parameters(), lr=0.003, momentum=0.9) 
+              	for net in nets]
 
 epochs = 800
 train_losses = [[] for net in nets]
@@ -236,9 +241,13 @@ interval = 250
 for n in range(len(train_losses)):
     for i in range(0,len(train_losses[n]),interval):
         try:
-            train_losses_averaged[n].append(np.mean(train_losses[n][i:i+interval]))
+            train_losses_averaged[n].append(
+              np.mean(train_losses[n][i:i+interval])
+            )
         except IndexError:
-            train_losses_averaged[n].append(np.mean(train_losses[n][i:]))
+            train_losses_averaged[n].append(
+              np.mean(train_losses[n][i:])
+            )
 ```
 
 ![activity_training_results](/assets/activity_training_results.png){:class="img-responsive" border=0}
@@ -265,9 +274,9 @@ for i in range(n_nets):
     nets[i].load_state_dict(best[i]['state_dict'])
 ```
 
-### What's Going Wrong?
+## What's Going Wrong?
 
-Let's investigate further the points that our models are misclassifying with another (t\)-SNE embedding.
+Let's investigate further the points that our models are misclassifying with another t-SNE embedding.
 
 ![activity_misclassification](/assets/activity_misclassification.png){:class="img-responsive" border=0}
 
