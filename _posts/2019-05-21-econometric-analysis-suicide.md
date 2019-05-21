@@ -87,7 +87,7 @@ The modelling technique we will employ is linear regression. This is perhaps the
 The model specification is as follows:
 
 \\[
-\log(\text{suicide rate}) = \beta_0 + \beta_1 \cdot \text{sex} + \beta_2 \cdot \text{age} + \beta_3 \cdot \log(\text{GDP per capita}) + \beta_4 \cdot \text{generation} \\ + \beta_5 \cdot \log(\text{population}) + \beta_6 \cdot \text{year} + \beta_7 \cdot \text{sex} \cdot \log(\text{GDP per capita})
+\log(\text{suicide rate}) = \beta_0 + \beta_1 \cdot \text{sex} + \beta_2 \cdot \text{age} + \beta_3 \cdot \log(\text{GDP per capita}) \\ + \beta_4 \cdot \text{generation} \\ + \beta_5 \cdot \log(\text{population}) + \beta_6 \cdot \text{year} \\ + \beta_7 \cdot \text{sex} \cdot \log(\text{GDP per capita})
 \\]
 
 Log transformations are used to combat the skewness of the numeric variables, yielding distributions that are much close to normal. Care is however required in the interpretation of their estimated parameters. The categorical variables (e.g. age, generation) will be converted to dummy variables, and we also include an interaction variable to allow the effect of per capita GDP to differ between men and women.
