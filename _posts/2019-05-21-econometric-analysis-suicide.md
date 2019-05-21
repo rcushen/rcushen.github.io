@@ -85,9 +85,13 @@ To answer our first two questions, descriptive statistics were appropriate. Howe
 The modelling technique we will employ is linear regression. This is perhaps the simplest example of supervised learning, using weighted linear combinations of input variables to predict a response. The weights are estimated using least squares, which seeks to minimise the sum of squared differences between predictions and true observed values. Aside from its simplicity, regression is advantageous in that it permits an intuitive interpretation for the estimated parameters as the marginal effects of each variable. For our purposes, this will be vital, as it will allow us to understand the specific influence of each explanatory variable.
 
 The model specification is as follows:
-$$
+
+\\[
+
 \log(\text{suicide rate}) = \beta_0 + \beta_1 \cdot \text{sex} + \beta_2 \cdot \text{age} + \beta_3 \cdot \log(\text{GDP per capita}) + \beta_4 \cdot \text{generation} \\ + \beta_5 \cdot \log(\text{population}) + \beta_6 \cdot \text{year} + \beta_7 \cdot \text{sex} \cdot \log(\text{GDP per capita})
-$$
+
+\\\]
+
 Log transformations are used to combat the skewness of the numeric variables, yielding distributions that are much close to normal. Care is however required in the interpretation of their estimated parameters. The categorical variables (e.g. age, generation) will be converted to dummy variables, and we also include an interaction variable to allow the effect of per capita GDP to differ between men and women.
 
 Fitting this model using the ```lm``` class in R yields the following results.
@@ -128,9 +132,9 @@ F-statistic: 584.3 on 13 and 9374 DF,  p-value: < 2.2e-16
 
 ![model_results](/assets/model_results.png){:class="img-responsive" border=0}
 
-How can these be interpreted? First, our fit appears quite good. $R^2$ is not too high, suggesting that only 45% of the variance in suicide rates can be explained by our inputs, but the diagnostic plots indicate a good overall fit: residuals exhibit constant variance and a mean close to zero. Regarding specific parameters: 
+How can these be interpreted? First, our fit appears quite good. \\(R^2​\\) is not too high, suggesting that only 45% of the variance in suicide rates can be explained by our inputs, but the diagnostic plots indicate a good overall fit: residuals exhibit constant variance and a mean close to zero. Regarding specific parameters: 
 
-- For two otherwise identical cohorts, male suicide rates are on average $\exp(1.94) - 1 = 598\%$ higher than female suicide rates. This is an enormous difference, but it fits with what we have seen previously.
+- For two otherwise identical cohorts, male suicide rates are on average \\(\exp(1.94) - 1 = 598\%​\\) higher than female suicide rates. This is an enormous difference, but it fits with what we have seen previously.
 - Suicide rates appear to increase monotonically with age. This is seen in the increasing magnitude of the parameter estimates for each age greoup.
 - There is no statistically significant difference in suicide rates across generations.
 - Surprisingly, per capita GDP demonstrates a small positive relationship with suicide rates. This is twice as strong for women as it is for men; an increase of 10% in per capita GDP is associated with a 1.40% increase in suicide rates for women, but only a 0.75% increase for men. 
