@@ -8,7 +8,7 @@ excerpt: The classification technique of logistic regression is introduced, alon
 
 *In this post, the classification technique of logistic regression is introduced, alongside a discussion of revealed preferences. This is done using a dataset on speed dating, generated experimentally as part of a paper by two professors at Columbia University.*
 
-# Introduction
+# Speed Dating and Revealed Preferences
 
 A topic near and dear to all single hearts (and some coupled) the world over: what does the opposite sex desire? In this post, we make an attempt to disentangle the deceit, duplicity and downright dishonesty that so fills the romantic realm, while also learning about the concept of revealed preferences and the logistic regression model.
 

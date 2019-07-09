@@ -8,7 +8,7 @@ excerpt: Two typical NLP techniques are explored in relation to the problem of t
 
 *In this post, two typical NLP techniques are explored in relation to the problem of topic modelling. These are applied to the 'A Million News Headlines' dataset, which is a corpus of over one million news article headlines published by the ABC.*
 
-# Introduction
+# Topic Modelling with LSA and LDA
 
 ## Motivating the Problem
 

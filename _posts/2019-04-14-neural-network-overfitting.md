@@ -3,10 +3,10 @@ layout: post
 title: "Overfitting in Neural Networks"
 date: 2019-04-14 12:00 +1000
 categories: statistics
-excerpt: A brief illustration of the problem of overfitting in neural network classification, showing that 'dense-er is not always better'. The 'Human Activity Recognition' dataset is used, composed of smartphone accelerometer readings from different activities.
+excerpt: A brief illustration of the problem of overfitting in neural network classification, showing that dense-er is not always better. The 'Human Activity Recognition' dataset is used, composed of smartphone accelerometer readings from different activities.
 ---
 
-*In this post, I provide a brief illustration of the problem of overfitting in neural network classification, showing that 'dense-er is not always better'. The 'Human Activity Recognition' dataset is used, composed of smartphone accelerometer readings of individuals performing one of six distinct activities.*
+*In this post, I provide a brief illustration of the problem of overfitting in neural network classification, showing that dense-er is not always better. The 'Human Activity Recognition' dataset is used, composed of smartphone accelerometer readings of individuals performing one of six distinct activities.*
 
 # Overfitting in Neural Network Classification
 
