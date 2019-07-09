@@ -3,8 +3,10 @@ layout: post
 title: "Econometric Analysis of Suicide Rates"
 date: 2019-05-21 12:00 +1000
 categories: econometrics
-excerpt: An exploration of suicide rates and how they vary across demographic cohorts.
+excerpt: An exploration of suicide rates and how they vary across demographic cohorts. Linear regression is used to model the relationship between suicide rates and per capita GDP, and a small positive effect is found.
 ---
+
+*In this post, I analyse a dataset describing suicide rates and how they vary across demographic cohorts. Linear regression is used to model the relationship between suicide rates and per capita GDP, and a small positive effect is found.*
 
 # An Econometric Analysis of Suicide Rates
 
