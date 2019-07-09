@@ -10,7 +10,7 @@ excerpt: An exploration of suicide rates and how they vary across demographic co
 
 # An Econometric Analysis of Suicide Rates
 
-Suicide is a tragic phenomenon that afflicts all populations. This blog post seeks to understand which factors most strongly influence its appearance, and how these may have changed over time. Specifically, we will seek to answer three questions: 
+Suicide is a tragic phenomenon that afflicts all populations. This blog post seeks to understand which factors most strongly influence its appearance and how these may have changed over time. Specifically, we will seek to answer three questions: 
 
 1. How do suicide rates vary across key demographic cohorts (i.e. gender, age, generation and country)? 
 2. Across these cohorts, has the rate changed over time? 
@@ -38,8 +38,7 @@ $ `gdp_per_capita ($)` <int> 4859, 4859, 4859, 4859, 4859, 4859, 4859, 4859...
 $ generation           <fct> G.I. Generation, G.I. Generation, Silent, G.I....
 ```
 
-A cursory examination of the dataset reveals that data integrity is overall quite high, though there are several idiosyncrasies that need to addressed. Outside of the period 1990-2014, many countries are missing from the dataset. We hence omit these years, as they will not allow a reasonable comparison across countries. It is also important to check whether, for each year, each country has data for each age group and gender - if this were not the case, we could be accidentally making inferences about entire populations that might only apply to certain segments of the population. Fortunately we do have a complete set of values. A final check for explicitly missing values reveals that the HDI is only available every fifth year for most of the sample. This is not necessarily a reason to drop the variable, but is certainly worth taking into account if we use it in a model later.
-
+A cursory examination of the dataset reveals that data integrity is overall quite high, though there are several idiosyncrasies that need to be addressed. For instance, outside of the period 1990-2014, many countries are missing from the dataset. We hence omit these years, as they will not allow a reasonable comparison across countries. A check for explicitly missing values next reveals that the HDI is only available every fifth year for most of the sample. This is not necessarily a reason to drop the variable, but it is certainly worth taking into account if we use it in a model later. It is also important to check whether, for each year, each country has data for each age group and gender - if this were not the case, we could be accidentally making inferences about entire populations that might only apply to certain segments of the population. Fortunately we do have a complete set of values. 
 ![HDI_availability](/assets/HDI_availability.png){:class="img-responsive" border=0}
 
 All of these idiosyncrasies are likely a product of the fact that the dataset is a union of several different sources. This is a reminder to be wary whenever we are combining multiple datasets!
@@ -72,13 +71,13 @@ This chart validates our earlier hypothesis: it does indeed appear that there is
 
 ![rate_over_time_ages](/assets/rate_over_time_ages.png){:class="img-responsive" border=0}
 
-Improvement has clearly not been uniform across age groups. Suicide rates for men aged 15-34 and 75+ have fallen dramatically, whereas for ages 35-74 rates have remained more constant. Female suicide rates have remained flat across the board, and for 35-54, they appear to have increased slightly. Aggregation has obscured this nuance; using sweeping statistics such as the average over a large group of countries can make it easy to forget that there may be important trends hidden beneath the surface.
+Improvement is not not uniform across age groups. Suicide rates for men aged 15-34 and 75+ have fallen dramatically, whereas for ages 35-74 rates have remained more constant. Female suicide rates have remained flat across the board, and for ages 35-54, they appear to have increased slightly. Aggregation has obscured this nuance; using sweeping statistics such as the average over a large group of countries can make it easy to forget that there may be important trends hidden beneath the surface.
 
 What about changes in GDP per capita and changes in suicide rates? As a preview of the modelling section, we pick three high and low GDP countries and observe how these variables have evolved over time.
 
 ![gdp_and_suicide_rate](/assets/gdp_and_suicide_rate.png){:class="img-responsive" border=0}
 
-Results are inconclusive. All six countries have seen increases in per capita GDP, but the responses of suicide rates are inconsistent. The United Status has seen a slight increase in suicide rates for both men and women; Guatemala has seen a dramatic one. Others react more intuitively, with suicide rates declining slightly alongside gains in GDP. Greece is an interesting example: a small downward trend in suicide rates is dramatically interrupted, seemingly as a result of the financial crisis that the nation endured in 2008. To tease out these relationships more fully, we need a model.
+Results are inconclusive. All six countries have seen increases in per capita GDP, but the responses of suicide rates are inconsistent. The United States has seen a slight increase in suicide rates for both men and women; Guatemala has seen a dramatic one. Others react more intuitively, with suicide rates declining slightly alongside gains in GDP. Greece is an interesting example: a small downward trend in suicide rates is dramatically interrupted, seemingly as a result of the financial crisis that the nation endured in 2008. To tease out these relationships more fully, we need a model.
 
 ## Building a Model
 
@@ -92,7 +91,7 @@ The model specification is as follows:
 \log(\text{suicide rate}) = \beta_0 + \beta_1 \cdot \text{sex} + \beta_2 \cdot \text{age} + \beta_3 \cdot \log(\text{GDP per capita}) \\\ + \beta_4 \cdot \text{generation} + \beta_5 \cdot \log(\text{population}) + \beta_6 \cdot \text{year} \\\ + \beta_7 \cdot \text{sex} \cdot \log(\text{GDP per capita})
 \\]
 
-Log transformations are used to combat the skewness of the numeric variables, yielding distributions that are much close to normal. Care is however required in the interpretation of their estimated parameters. The categorical variables (e.g. age, generation) will be converted to dummy variables, and we also include an interaction variable to allow the effect of per capita GDP to differ between men and women.
+Log transformations are used to combat the skewness of the numeric variables, yielding distributions that are much close to normal. However, care is required in the interpretation of their estimated parameters. The categorical variables (e.g. age, generation) will be converted to dummy variables, and we also include an interaction variable to allow the effect of per capita GDP to differ between men and women.
 
 Fitting this model using the ```lm``` class in R yields the following results.
 
@@ -139,12 +138,12 @@ How can these be interpreted? First, our fit appears quite good. \\(R^2​\\) is
 - There is no statistically significant difference in suicide rates across generations.
 - Surprisingly, per capita GDP demonstrates a small positive relationship with suicide rates. This is twice as strong for women as it is for men; an increase of 10% in per capita GDP is associated with a 1.40% increase in suicide rates for women, but only a 0.75% increase for men. 
 - Larger populations appear to reduce suicide rates slightly. Specifically, a 10% increase in population size is associated with a 2.5% reduction in suicide rates.
-- A highly significant time trend is observed. Ceteris paribus, each year suicide rates were expected to fall by 1.8%. 
+- A highly significant time trend is observed. Holding all other factors constant, each year suicide rates were expected to fall by 1.8%. 
 
-It is important to note however that these interpretations are subject to several technical assumptions about the data, which we will not here explore. For a further discussion of the linear regression technique, see [An Introduction to Statistical Learning (James et al)](http://www-bcf.usc.edu/~gareth/ISL/).
+It is important to note that these interpretations are subject to several technical assumptions about the data, which we will not here explore. For a further discussion of the linear regression technique, see [An Introduction to Statistical Learning (James et al)](http://www-bcf.usc.edu/~gareth/ISL/).
 
 ## Conclusions
 
 Evidently suicide is a complex and multifaceted phenomenon. Across the large countries that comprised our sample, we saw that male suicide rates almost universally exceeded those for women, and that overall suicide rates have been falling across the past two decades. Nevertheless, we also saw that aggregation can hide the differing trends that may characterise subgroups of the data. For policymakers, this suggests that initiatives to reduce suicide rates may require a different approach for different demographics; given the variation we have observed, it is unlikely that a single panacea is feasible. 
 
-Our model meanwhile underscored some of these observations. Ceteris paribus, suicide rates for men were nearly 600% higher, and a steady overall decline in suicides rates of 1.8% per year was observed. It also suggested an unexpected conclusion: per capita GDP may in fact have a small positive effect on suicide rates, particularly so for women. Given that this result is a little unintuitive, we may wish to validate it by investigating alternative datasets, or selecting an alternate sample of countries. Nevertheless, it is an interesting example of one potential downside to increases in material wealth.
+Our model meanwhile underscored some of these observations. Ceteris paribus, suicide rates for men were nearly 600% higher, and a steady overall decline in suicides rates of 1.8% per year was observed. It also nonetheless suggested an unexpected conclusion: per capita GDP may in fact have a small positive effect on suicide rates, particularly so for women. Given that this result is a little unintuitive, we may wish to validate it by investigating alternative datasets, or selecting an alternate sample of countries. Nevertheless, it is an interesting example of one possible downside to increases in material wealth.
